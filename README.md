@@ -1,6 +1,6 @@
 # Sistemas Operativos Avanzados
 
-## Grupo: &nbsp;NullPointerException
+## Grupo: &nbsp;X1
 - Amengual, Miguel Angel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 35991055
 - Castagna, Cristian Damian &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 37398696
 - Krause, Ezequiel Otto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 39758862
