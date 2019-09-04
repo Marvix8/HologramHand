@@ -48,6 +48,7 @@ Se comunica con microcontroladores a través de una interfaz I2C y posee una lib
 Para una captura precisa de movimiento rápido y lento, posee un rango de escala programable de 250/500/1000/2000 grados/seg para el giroscopio, 2g/4g/8g/16g para el acelerómetro y ±4800µT para el magnetómetro.
 
 ### Flex
+<img src="https://github.com/Marvix8/X1/blob/master/Flex1.jpeg" alt="drawing" width="150"/>  <img src="https://github.com/Marvix8/X1/blob/master/Flex2.jpeg" alt="drawing" width="150"/>
 
 Este sensor aumenta su resistencia al ser flexionado. El conector tiene dos cables para conectarse directamente al protoboard.
 Las dimensiones son 10 cm. x 3 cm. aunque la parte útil que medirá la resistencia doblado es de 8 cm.
