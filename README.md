@@ -1,3 +1,4 @@
+
 # Sistemas Operativos Avanzados
 
 ## Grupo: &nbsp;X1
@@ -87,3 +88,62 @@ Los LEDs de 5mm se presentan encapsulados en una cúpula de resina de color tran
 
 <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Diagrama%20Funcional.png" alt="drawing" width="600"/>
 
+### Armado de sensor Flex
+Se hicieron pruebas con los distintos materiales (papel y grafito). Se cortaron pedazos de 110 mm. x 25 mm. de papel de dibujo artístico (de muy bajo gramaje), papel de hoja de impresión (gramaje intermedio) y en hoja canson (gramaje alto). 
+Se pintó con un lápiz 9B, a mayor cantidad de B, mayor cantidad de grafito posee, y la mina más blanda es.
+Se realizaron mediciones con el multímetro sobre los distintos pedazos de papel:
+*  realizando el trazo del lápiz de forma vertical y horizontal, se descartó el trazo de forma horizontal dado que presentaba mayor variación de resistencias. 
+* se descartó el que estaba hecho con hoja de impresora puesto que presentaba resistencia muy alta.
+
+Se plantearon dos formas de disponer el conductor de cobre de 100 mm. x 5mm.:
+* con dos tiras, una del lado de adelante y otra por detrás de la hoja.
+* con dos tiras, ambas de un mismo lado de la hoja.
+
+Se plantearon dos materiales distintos como aislante, plástico de radiografía y plástico de carpeta.
+
+El armado de cada uno de los sensores mencionados se realiza siguiendo los siguientes pasos:
+
+ 1. Cortar el papel con tamaño 110 mm. x 25 mm.
+ 2. Cortar las dos tiras de conductor con tamaño 100 mm. x 5 mm.
+ 3. Cortar dos cables.
+ 4. Cortar dos pedazos de aislante (plástico) con tamaño 115 mm. x 25 mm.
+ 5. Soldar un cable por cada tira de conductor a uno de los extremos del mismo.
+ 6. Dependiendo del tipo de distribución de las tiras de conductor.
+--  En la misma cara 
+--- Pintar solo una cara del papel con grafito.
+--- Pegar con pegamento las dos tiras de conductor sobre uno de los aislantes en la misma cara.
+--- Pegar con pegamento la lámina de papel sobre el otro aislante, quedando el grafito del lado opuesto al mismo.
+--- Enfrentar ambas caras (conductores contra papel) y unir con cinta adhesiva.
+-- En distintas caras.
+--- Pintar ambas caras del papel con grafito.
+--- Pegar con pegamento cada una de las tiras de conductor sobre cada una de las láminas de aislante.
+--- Colocar el papel entre medio de los dos aislantes (los conductores deben quedar presionando sobre el papel).
+--- Unir con cinta adhesiva.
+
+#### Armado en imágenes
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/1.%20Papeles%20con%20grafito.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/2.%20Aislante.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/3.%20Conductor%20con%20cable%20soldado.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/4.%20Conductor%20pegado%20a%20aislante%20y%20papel%20pegado%20a%20aislante.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/5.%20Cinta%20adhesiva%20a%20aislantes.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/6.%20Flex%20finalizado.jpeg" alt="drawing" width="600"/>
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/7.%20Prueba%20con%20guante.jpeg" alt="drawing" width="600"/>
+
+#### Prototipos
+##### Prototipo 1: Ambos conductores en un mismo aislante de plástico de radiografía con papel de dibujo artístico
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%201.pjeg" alt="drawing" width="600"/>
+
+##### Prototipo 2: Un conductor en cada aislante de plástico de radiografía con papel canson
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%202.pjeg" alt="drawing" width="600"/>
+
+##### Prototipo 3: Un conductor en cada aislante de plástico de carpeta con papel canson
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%203.pjeg" alt="drawing" width="600"/>
+
+##### Prototipo 4: Ambos conductores en un mismo aislante de plástico de carpeta con papel de dibujo artístico
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%204.pjeg" alt="drawing" width="600"/>
