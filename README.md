@@ -137,13 +137,13 @@ El armado de cada uno de los sensores mencionados se realiza siguiendo los sigui
 
 #### Prototipos
 ##### Prototipo 1: Ambos conductores en un mismo aislante de plástico de radiografía con papel de dibujo artístico
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%201.pjeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%201.jpeg" alt="drawing" width="600"/>
 
 ##### Prototipo 2: Un conductor en cada aislante de plástico de radiografía con papel canson
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%202.pjeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%202.jpeg" alt="drawing" width="600"/>
 
 ##### Prototipo 3: Un conductor en cada aislante de plástico de carpeta con papel canson
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%203.pjeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%203.jpeg" alt="drawing" width="600"/>
 
 ##### Prototipo 4: Ambos conductores en un mismo aislante de plástico de carpeta con papel de dibujo artístico
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%204.pjeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%204.jpeg" alt="drawing" width="600"/>
