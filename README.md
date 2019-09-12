@@ -109,16 +109,16 @@ El armado de cada uno de los sensores mencionados se realiza siguiendo los sigui
  4. Cortar dos pedazos de aislante (plástico) con tamaño 115 mm. x 25 mm.
  5. Soldar un cable por cada tira de conductor a uno de los extremos del mismo.
  6. Dependiendo del tipo de distribución de las tiras de conductor.
---  En la misma cara
---- Pintar solo una cara del papel con grafito.
---- Pegar con pegamento las dos tiras de conductor sobre uno de los aislantes en la misma cara.
---- Pegar con pegamento la lámina de papel sobre el otro aislante, quedando el grafito del lado opuesto al mismo.
---- Enfrentar ambas caras (conductores contra papel) y unir con cinta adhesiva.
--- En distintas caras.
---- Pintar ambas caras del papel con grafito.
---- Pegar con pegamento cada una de las tiras de conductor sobre cada una de las láminas de aislante.
---- Colocar el papel entre medio de los dos aislantes (los conductores deben quedar presionando sobre el papel).
---- Unir con cinta adhesiva.
+    - En la misma cara
+      - Pintar solo una cara del papel con grafito.
+      - Pegar con pegamento las dos tiras de conductor sobre uno de los aislantes en la misma cara.
+      - Pegar con pegamento la lámina de papel sobre el otro aislante, quedando el grafito del lado opuesto al mismo.
+      - Enfrentar ambas caras (conductores contra papel) y unir con cinta adhesiva.
+    - En distintas caras.
+      - Pintar ambas caras del papel con grafito.
+      - Pegar con pegamento cada una de las tiras de conductor sobre cada una de las láminas de aislante.
+      - Colocar el papel entre medio de los dos aislantes (los conductores deben quedar presionando sobre el papel).
+      - Unir con cinta adhesiva.
 
 #### Armado en imágenes
 <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/1.%20Papeles%20con%20grafito.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/2.%20Aislante.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/3.%20Conductor%20con%20cable%20soldado.jpeg" alt="drawing" width="250"/>
