@@ -121,29 +121,21 @@ El armado de cada uno de los sensores mencionados se realiza siguiendo los sigui
 --- Unir con cinta adhesiva.
 
 #### Armado en imágenes
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/1.%20Papeles%20con%20grafito.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/1.%20Papeles%20con%20grafito.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/2.%20Aislante.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/3.%20Conductor%20con%20cable%20soldado.jpeg" alt="drawing" width="250"/>
 
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/2.%20Aislante.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/4.%20Conductor%20pegado%20a%20aislante%20y%20papel%20pegado%20a%20aislante.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/5.%20Cinta%20adhesiva%20a%20aislantes.jpeg" alt="drawing" width="250"/> <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/6.%20Flex%20finalizado.jpeg" alt="drawing" width="250"/>
 
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/3.%20Conductor%20con%20cable%20soldado.jpeg" alt="drawing" width="600"/>
-
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/4.%20Conductor%20pegado%20a%20aislante%20y%20papel%20pegado%20a%20aislante.jpeg" alt="drawing" width="600"/>
-
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/5.%20Cinta%20adhesiva%20a%20aislantes.jpeg" alt="drawing" width="600"/>
-
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/6.%20Flex%20finalizado.jpeg" alt="drawing" width="600"/>
-
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/7.%20Prueba%20con%20guante.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/7.%20Prueba%20con%20guante.jpeg" alt="drawing" width="250"/>
 
 #### Prototipos
 ##### Prototipo 1: Ambos conductores en un mismo aislante de plástico de radiografía con papel de dibujo artístico
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%201.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%201.jpeg" alt="drawing" width="300"/>
 
 ##### Prototipo 2: Un conductor en cada aislante de plástico de radiografía con papel canson
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%202.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%202.jpeg" alt="drawing" width="300"/>
 
 ##### Prototipo 3: Un conductor en cada aislante de plástico de carpeta con papel canson
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%203.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%203.jpeg" alt="drawing" width="300"/>
 
 ##### Prototipo 4: Ambos conductores en un mismo aislante de plástico de carpeta con papel de dibujo artístico
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%204.jpeg" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Flex%20-%20opcion%204.jpeg" alt="drawing" width="300"/>
