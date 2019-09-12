@@ -109,7 +109,7 @@ El armado de cada uno de los sensores mencionados se realiza siguiendo los sigui
  4. Cortar dos pedazos de aislante (plástico) con tamaño 115 mm. x 25 mm.
  5. Soldar un cable por cada tira de conductor a uno de los extremos del mismo.
  6. Dependiendo del tipo de distribución de las tiras de conductor.
---  En la misma cara 
+--  En la misma cara
 --- Pintar solo una cara del papel con grafito.
 --- Pegar con pegamento las dos tiras de conductor sobre uno de los aislantes en la misma cara.
 --- Pegar con pegamento la lámina de papel sobre el otro aislante, quedando el grafito del lado opuesto al mismo.
