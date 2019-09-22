@@ -81,7 +81,7 @@ Los LEDs de 5mm se presentan encapsulados en una cúpula de resina de color tran
 
 ### Diagrama Físico
 
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Diagrama%20Físico.png" alt="drawing" width="600"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Diagrama%20Físico.jpeg" alt="drawing" width="600"/>
 
 
 ### Diagrama Funcional
