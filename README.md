@@ -93,6 +93,9 @@ Los LEDs de 5mm se presentan encapsulados en una cúpula de resina de color tran
 
 <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Diagrama%20Conexion%20Arduino.jpg" alt="drawing" width="600"/>
 
+### Diagrama de Software
+
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Diagrama%20de%20Software.jpeg" alt="drawing" width="600"/>
 
 ### Armado de sensor Flex
 Se hicieron pruebas con los distintos materiales (papel y grafito). Se cortaron pedazos de 110 mm. x 25 mm. de papel de dibujo artístico (de muy bajo gramaje), papel de hoja de impresión (gramaje intermedio) y en hoja canson (gramaje alto). 
