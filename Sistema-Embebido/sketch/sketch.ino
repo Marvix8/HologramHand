@@ -19,8 +19,10 @@ unsigned long previousMillis = 0; // millis() returns an unsigned long.
 #define FLEX_SENSOR_MEDIO   A2
 #define BLUETOOTH_RX        7
 #define BLUETOOTH_TX        8
-#define LED                 0
-#define RGB_LED             1
+#define BLUE_LED            0
+#define RGB_LED_RED         1
+#define RGB_LED_BLUE        2
+#define RGB_LED_GREEN       3
 
 /*
    Voltaje que reciven los sensores
@@ -51,13 +53,14 @@ unsigned long previousMillis = 0; // millis() returns an unsigned long.
  * Valor de cada movimiento.
  * Es el valor que se enviará vía Bluetooth a la aplicación Android.
  */
-#define PLAY_PAUSE        0
-#define NEXT              1
-#define PREVIOUS          2
-#define SPEED_X1          3
-#define SPEED_X2          4
-#define SPEED_X05         5
-#define NOT_MOVEMENT      9
+#define PLAY_PAUSE          0
+#define NEXT                1
+#define PREVIOUS            2
+#define SPEED_X1            3
+#define SPEED_X2            4
+#define SPEED_X05           5
+#define NOT_VALID_GESTURE   8
+#define NOT_MOVEMENT        9
 
 /*
  * Valor de la posición de cada sensor flex.
@@ -106,8 +109,10 @@ void setup()
   pinMode(FLEX_SENSOR_PULGAR, INPUT);
   pinMode(FLEX_SENSOR_INDICE, INPUT);
   pinMode(FLEX_SENSOR_MEDIO, INPUT);
-  pinMode(LED, OUTPUT);
-  pinMode(RGB_LED, OUTPUT);
+  pinMode(BLUE_LED, OUTPUT);
+  pinMode(RGB_LED_RED, OUTPUT);
+  pinMode(RGB_LED_BLUE, OUTPUT);
+  pinMode(RGB_LED_GREEN, OUTPUT);
 
   bluetooth.begin(9600); // Inicializa comunicación bluetooth.
   Serial.begin(9600); // Inicializa comunicación en serie.
@@ -118,33 +123,45 @@ void setup()
 */
 void loop()
 {
-  unsigned long currentMillis = millis(); // grab current time
+  // Obtener tiempo actual
+  unsigned long currentMillis = millis();
 
   // Si interval es menor a la diferencia de currentMillis y previousMillis tomo las mediciones de los sensores.
   if ((unsigned long)(currentMillis - previousMillis) >= interval)
   {
-    angleFlexPulgar = readFlex(FLEX_SENSOR_PULGAR, STRAIGHT_RESISTANCE_FLEX_PULGAR, BEND_RESISTANCE_FLEX_PULGAR, DIVISOR_RESISTANCE_FLEX_PULGAR);
-    angleFlexIndice = readFlex(FLEX_SENSOR_INDICE, STRAIGHT_RESISTANCE_FLEX_INDICE, BEND_RESISTANCE_FLEX_INDICE, DIVISOR_RESISTANCE_FLEX_INDICE);
-    angleFlexMedio = readFlex(FLEX_SENSOR_MEDIO, STRAIGHT_RESISTANCE_FLEX_MEDIO, BEND_RESISTANCE_FLEX_MEDIO, DIVISOR_RESISTANCE_FLEX_MEDIO);
-
-    flexPulgarPosition = convertAngleIntoPosition(angleFlexPulgar);
-    flexIndicePosition = convertAngleIntoPosition(angleFlexIndice);
-    flexMedioPosition = convertAngleIntoPosition(angleFlexMedio);
-
-    newMovement = convertInformationIntoMovement (flexPulgarPosition, flexIndicePosition, flexMedioPosition, 5);
-
-    // si el movimiento es distinto al anterior envío la información a la aplicación Android.
-    if (newMovement != previousMovement)
+    if(bluetooth.available())
     {
-      sendInformationViaBluetooth (newMovement);
-      previousMovement = newMovement;
+      digitalWrite(BLUE_LED, HIGH);
+      angleFlexPulgar = readFlex(FLEX_SENSOR_PULGAR, STRAIGHT_RESISTANCE_FLEX_PULGAR, BEND_RESISTANCE_FLEX_PULGAR, DIVISOR_RESISTANCE_FLEX_PULGAR);
+      angleFlexIndice = readFlex(FLEX_SENSOR_INDICE, STRAIGHT_RESISTANCE_FLEX_INDICE, BEND_RESISTANCE_FLEX_INDICE, DIVISOR_RESISTANCE_FLEX_INDICE);
+      angleFlexMedio = readFlex(FLEX_SENSOR_MEDIO, STRAIGHT_RESISTANCE_FLEX_MEDIO, BEND_RESISTANCE_FLEX_MEDIO, DIVISOR_RESISTANCE_FLEX_MEDIO);
+  
+      flexPulgarPosition = convertAngleIntoPosition(angleFlexPulgar);
+      flexIndicePosition = convertAngleIntoPosition(angleFlexIndice);
+      flexMedioPosition = convertAngleIntoPosition(angleFlexMedio);
+  
+      newMovement = convertInformationIntoMovement (flexPulgarPosition, flexIndicePosition, flexMedioPosition, 5);
+  
+      // si el movimiento es distinto al anterior envío la información a la aplicación Android.
+      if (newMovement != previousMovement && newMovement != (int) NOT_VALID_GESTURE)
+      {
+        
+        sendInformationViaBluetooth (newMovement);
+        previousMovement = newMovement;
+      }
+      else if (newMovement == (int) NOT_VALID_GESTURE)
+      {
+        rgbColor(LOW, LOW, LOW);
+      }
+    }
+    else
+    {
+      digitalWrite(BLUE_LED, LOW);
     }
 
     // Actualizo previousMillis para que vuelva a ingresar en próximas iteraciones.
     previousMillis = millis();
   }
-
-  //reads measurement and filter it
 
   /*
     // Ejemplo de invocación a Kalman.. nos va a servir para el acelerómetro.
@@ -225,41 +242,47 @@ int convertAngleIntoPosition (const float flexAngle)
 int convertInformationIntoMovement (const int sensorFlexPulgar, const int sensorFlexIndice, const int sensorFlexMedio, const int sensorAcelerometer)
 {
   int movement;
-  if (sensorFlexPulgar == 0)
+  if (sensorFlexPulgar == (int) BEND_FLEX)
   {
-    if (sensorFlexIndice == 0 && sensorFlexMedio == 0)
+    if (sensorFlexIndice == (int) BEND_FLEX && sensorFlexMedio == (int) BEND_FLEX)
     {
+      rgbColor(255, 0, 0); // Color rojo.
       return movement = (int) PLAY_PAUSE;  
     }
-    else if (sensorFlexIndice == 2)
+    else if (sensorFlexIndice == (int) STRAIGHT_FLEX)
     {
-      if (sensorFlexMedio == 2)
+      if (sensorFlexMedio == (int) STRAIGHT_FLEX)
       {
+        rgbColor(0, 255, 0); // Color verde.
         return movement = (int) SPEED_X2;
       }
-      else if (sensorFlexMedio == 0)
+      else if (sensorFlexMedio == (int) BEND_FLEX)
       {
+        rgbColor(0, 0, 255); // Color azul.
         return movement = (int) SPEED_X1;
       }
     }
-    else if (sensorFlexIndice == 1 && sensorFlexMedio == 0)
+    else if (sensorFlexIndice == (int) MEDIUM_BEND_FLEX && sensorFlexMedio == (int) BEND_FLEX)
     {
+        rgbColor(255, 0, 255); // Color magenta.
         return movement = (int) SPEED_X05;
     } 
   }
-  else if (sensorFlexPulgar == 2 && sensorFlexIndice == 2 && sensorFlexMedio == 2)
+  else if (sensorFlexPulgar == (int) STRAIGHT_FLEX && sensorFlexIndice == (int) STRAIGHT_FLEX && sensorFlexMedio == (int) STRAIGHT_FLEX)
   {
     if (sensorAcelerometer == (int) LEFT)
     {
+        rgbColor(255, 255, 0); // Color amarillo.
         return movement = (int) NEXT;
     }
     else if (sensorAcelerometer == (int) RIGHT)
     {
+        rgbColor(255, 255, 125); // Color frambuesa.
         return movement = (int) PREVIOUS;
     }
   }
   
-  return movement = previousMovement;
+  return movement = (int) NOT_VALID_GESTURE;
 }
 
 /*
@@ -270,8 +293,20 @@ int convertInformationIntoMovement (const int sensorFlexPulgar, const int sensor
  */
 void sendInformationViaBluetooth (const int movement) 
 {
-  if(bluetooth.available())
-  {
     bluetooth.write(movement);
-  }  
+}
+
+
+/*
+ * Función utilizada para cambiar el color de led RGB
+ * Entrada:
+ * @redLightValue: cantidad de color rojo.
+ * @blueLightValue: cantidad de color azul.
+ * @greenLightValue: cantidad de color verde.
+ */
+void rgbColor (int redLightValue, int greenLightValue, int blueLightValue)
+{
+  analogWrite(RGB_LED_RED, redLightValue);
+  analogWrite(RGB_LED_BLUE, blueLightValue);
+  analogWrite(RGB_LED_GREEN, greenLightValue);
 }
