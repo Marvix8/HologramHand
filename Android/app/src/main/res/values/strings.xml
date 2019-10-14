@@ -9,5 +9,9 @@
     <string name="members">Integrantes</string>
     <string name="about_app_title">Acerca de la app</string>
     <string name="description_app">Descripcion de la app</string>
+    <string name="place_first_name">Amengual, Miguel Angel</string>
+    <string name="place_second_name">Castagna, Cristian</string>
+    <string name="place_third_name">Krause, Ezequiel</string>
+    <string name="place_fourth_name">Scarpello, Franco</string>
 
 </resources>
