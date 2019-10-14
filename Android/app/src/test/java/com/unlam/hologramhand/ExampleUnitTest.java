@@ -1,4 +1,4 @@
-package com.example.hologramhand;
+package com.unlam.hologramhand;
 
 import org.junit.Test;
 

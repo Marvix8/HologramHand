@@ -1,4 +1,4 @@
-package com.example.hologramhand;
+package com.unlam.hologramhand;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.hologramhand", appContext.getPackageName());
+        assertEquals("com.unlam.hologramhand", appContext.getPackageName());
     }
 }
