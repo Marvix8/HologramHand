@@ -7,8 +7,8 @@
     <string name="about">Acerca del grupo</string>
 
     <string name="members">Integrantes</string>
-    <string name="about_app_title">Acerca de la app</string>
-    <string name="description_app">Descripcion de la app</string>
+    <string name="about_app_title">Acerca de la App</string>
+    <string name="description_app">El fin es crear una experiencia salida de pelicula, al poder controlar hologramas con gestos de la mano.  Para poder vivir la experiencia se necesita del guante que estamos desarrollando, siendo este un periférico (mouse, joystick) para celulares, un celular con Android y una sencilla pirámide de acrílico.</string>
     <string name="place_first_name">Amengual, Miguel Angel</string>
     <string name="place_second_name">Castagna, Cristian</string>
     <string name="place_third_name">Krause, Ezequiel</string>
