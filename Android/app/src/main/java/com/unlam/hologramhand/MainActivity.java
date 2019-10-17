@@ -13,8 +13,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
     public void openAboutUs(View view){
         Intent intent = new Intent(this, AboutUs.class);
+        startActivity(intent);
+    }
+
+    public void openImageGallery(View view){
+        Intent intent = new Intent(this, ImageGallery.class);
         startActivity(intent);
     }
 }
