@@ -22,6 +22,7 @@
         android:id="@+id/mainMenuButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:onClick="openImageSlideshow"
         app:layout_constraintBottom_toTopOf="@+id/mainButtonBottomGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
