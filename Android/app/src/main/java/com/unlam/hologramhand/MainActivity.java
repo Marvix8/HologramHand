@@ -3,9 +3,13 @@ package com.unlam.hologramhand;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,10 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Switch bluetoothSwitch;
     private Set<BluetoothDevice> pairedDevices;
+    private Set<String> devices;
     private ListView deviceList;
     private ArrayAdapter adapter;
     private BluetoothAdapter bluetoothAdapter;
+    private BroadcastReceiver broadcastReceiver;
     public static final int REQUEST_CODE = 1;
+    public static final int ACTIVATE_DISCOVER_BLUETOOTH = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,30 +53,19 @@ public class MainActivity extends AppCompatActivity {
                 public void turnOnBluetooth(){
                     if (!bluetoothAdapter.isEnabled()) {
                         Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(turnOn, REQUEST_CODE);
+                        startActivityForResult(turnOn, 0);
                         Toast.makeText(getApplicationContext(), "Activando",Toast.LENGTH_SHORT).show();
-                    } else {
-                        this.list();
                     }
-                }
-                public void list() {
-                    pairedDevices = bluetoothAdapter.getBondedDevices();
-                    deviceList = (ListView) findViewById(R.id.listView);
-                    ArrayList list = new ArrayList();
-
-                    for (BluetoothDevice bt : pairedDevices) {
-                        list.add(bt.getName());
-                    }
-                    Toast.makeText(getApplicationContext(), "Mostrando dispositivos Bluetooth.", Toast.LENGTH_SHORT).show();
-
-                    adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, list);
-
-                    deviceList.setAdapter(adapter);
                 }
 
                 private void turnOffBluetooth() {
                     if (bluetoothAdapter != null) {
-                        deviceList.setAdapter(null);
+                        if(bluetoothAdapter.isDiscovering()){
+                            bluetoothAdapter.cancelDiscovery();
+                        }
+                        if(deviceList != null) {
+                            deviceList.setAdapter(null);
+                        }
                         bluetoothAdapter.disable();
                         Toast.makeText(getApplicationContext(), "Apagando Bluetooth.", Toast.LENGTH_SHORT).show();
                     }
@@ -79,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void validateBluetoothState() {
-        if (bluetoothAdapter.isEnabled()) {
-            this.list();
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             bluetoothSwitch.setChecked(true);
         }
     }
@@ -95,12 +90,50 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void searchDevices(View view){
+        if(bluetoothAdapter == null){
+            Toast.makeText(getApplicationContext(), "Error al buscar dispositivos.", Toast.LENGTH_SHORT).show();
+        }else if(bluetoothAdapter != null && !bluetoothAdapter.isEnabled()) {
+            Toast.makeText(getApplicationContext(), "Encienda el bluetooth.", Toast.LENGTH_SHORT).show();
+        }else {
+                IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+                if (!bluetoothAdapter.isDiscovering()) {
+                    if(adapter != null){
+                        adapter.clear();
+                    }
+                    MainActivity.this.registerReceiver(bReciever, filter);
+                    bluetoothAdapter.startDiscovery();
+                } else {
+                    MainActivity.this.unregisterReceiver(bReciever);
+                    bluetoothAdapter.cancelDiscovery();
+                }
+            }
+    }
+
+    private final BroadcastReceiver bReciever = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                System.out.println(device.getName());
+                System.out.println("--------------------------------");
+                // Create a new device item
+                DeviceItem newDevice = new DeviceItem(device.getName(), device.getAddress(), "false");
+                // Add it to our adapter
+                adapter.add(newDevice);
+            }
+        }
+    };
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CODE  && resultCode  == RESULT_OK) {
-                this.list();
+            if (resultCode  == RESULT_OK) {
+                if(requestCode == ACTIVATE_DISCOVER_BLUETOOTH){
+                    System.out.println(data);
+                }
             }
         } catch (Exception ex) {
             Toast.makeText(MainActivity.this, "Ocurrio un error",
@@ -123,6 +156,22 @@ public class MainActivity extends AppCompatActivity {
 
         deviceList.setAdapter(adapter);
     }
+
+//    public void list() {
+//        pairedDevices = bluetoothAdapter.getBondedDevices();
+//        deviceList = (ListView) findViewById(R.id.listView);
+//        ArrayList list = new ArrayList();
+//
+//        for (BluetoothDevice bt : pairedDevices) {
+//            list.add(bt.getName());
+//        }
+//        Toast.makeText(getApplicationContext(), "Mostrando dispositivos Bluetooth.", Toast.LENGTH_SHORT).show();
+//
+//        adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, list);
+//
+//        deviceList.setAdapter(adapter);
+//    }
+
 
 }
 

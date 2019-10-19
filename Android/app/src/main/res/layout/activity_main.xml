@@ -84,14 +84,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bluetoothSwitchTextGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.20" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <TextView
         android:id="@+id/bluetoothText"
@@ -146,6 +146,18 @@
         app:layout_constraintVertical_bias="0.0"
         android:layout_height="0dp"
         android:layout_width="0dp" />
+
+    <ImageButton
+        android:id="@+id/searchDevices"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:onClick="searchDevices"
+        app:layout_constraintBottom_toTopOf="@+id/bluetoothBottomGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bluetoothSwitchGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
