@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -77,6 +78,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        if (deviceList == null) {
+            deviceList = (ListView) findViewById(R.id.listView);
+        }
+
+        deviceList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // TODO Auto-generated method stub
+
+                Toast.makeText(MainActivity.this, adapter.getItem(position).toString(), Toast.LENGTH_LONG).show();
+
+                String item = adapter.getItem(position).toString();
+                String[] stringItemArray = item.split("º ");
+
+                BluetoothService btService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+
+            }
+        });
     }
 
     private void validateBluetoothState() {

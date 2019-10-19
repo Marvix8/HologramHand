@@ -30,7 +30,7 @@ public class DeviceItem {
         StringBuilder sb = new StringBuilder();
 
         sb.append(this.getName())
-            .append(" : ")
+            .append(" º ")
             .append(this.getAddress());
 
         return sb.toString();
