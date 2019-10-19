@@ -25,4 +25,14 @@ public class DeviceItem {
     public String getName() {
         return name;
     }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.getName())
+            .append(" : ")
+            .append(this.getAddress());
+
+        return sb.toString();
+    }
 }
