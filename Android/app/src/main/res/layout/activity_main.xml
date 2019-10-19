@@ -7,18 +7,6 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/bluetoothButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bluetoothBottomGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bluetoothTopGuideline"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:color/holo_blue_dark" />
-
-    <ImageButton
         android:id="@+id/mainMenuButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -27,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bluetoothButton"
+        app:layout_constraintTop_toTopOf="@+id/mainButtonTopGuideline"
         app:srcCompat="@android:color/holo_green_dark" />
 
     <ImageButton
@@ -52,6 +40,13 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bluetoothBottomGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mainButtonTopGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -84,15 +79,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bluetoothSwitchGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bluetoothSwitchTextGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.20" />
+
     <TextView
         android:id="@+id/bluetoothText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activate_bluetooth"
         app:layout_constraintBottom_toTopOf="@+id/bluetoothBottomGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/bluetoothButton"
-        app:layout_constraintTop_toTopOf="@+id/bluetoothButton" />
+        app:layout_constraintEnd_toStartOf="@+id/bluetoothSwitch"
+        app:layout_constraintStart_toStartOf="@+id/bluetoothSwitchTextGuideline"
+        app:layout_constraintTop_toTopOf="@+id/bluetoothTopGuideline" />
 
     <TextView
         android:id="@+id/mainAppText"
@@ -102,18 +111,41 @@
         app:layout_constraintBottom_toBottomOf="@+id/mainMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/mainMenuButton"
-        app:layout_constraintTop_toBottomOf="@+id/bluetoothButton" />
+        app:layout_constraintTop_toTopOf="@+id/mainButtonTopGuideline" />
 
     <TextView
         android:id="@+id/aboutUsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about"
         android:onClick="openAboutUs"
+        android:text="@string/about"
         app:layout_constraintBottom_toTopOf="@+id/aboutUsBottomGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/groupButton"
         app:layout_constraintTop_toBottomOf="@+id/mainMenuButton" />
+
+    <Switch
+        android:id="@+id/bluetoothSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:showText="true"
+        android:switchMinWidth="50dp"
+        android:textOff="@string/bluetooth_off"
+        android:textOn="@string/bluetooth_on"
+        android:theme="@style/SwitchTheme"
+        app:layout_constraintBottom_toTopOf="@+id/bluetoothBottomGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/bluetoothSwitchGuideline"
+        app:layout_constraintTop_toTopOf="@+id/bluetoothTopGuideline" />
+
+    <ListView
+        android:id="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/mainButtonTopGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+        app:layout_constraintTop_toTopOf="@+id/bluetoothBottomGuideline"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_height="0dp"
+        android:layout_width="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

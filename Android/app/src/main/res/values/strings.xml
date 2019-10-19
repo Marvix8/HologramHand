@@ -5,6 +5,8 @@
     <string name="deactivate_bluetooth">Desactivar Bluetooth</string>
     <string name="go_to_hologram_hand">Hologram Hand</string>
     <string name="about">Acerca del grupo</string>
+    <string name="bluetooth_on">I</string>
+    <string name="bluetooth_off">O</string>
 
     <string name="members">Integrantes</string>
     <string name="about_app_title">Acerca de la App</string>
