@@ -1,8 +1,7 @@
 #ifndef _Gesture_h
 #define _Gesture_h
 
-#include "Gesture.h"
-
+#include "Hand.h"
 
 // Acciones a realizar en aplicación Android
 #define PLAY_PAUSE          0
@@ -15,11 +14,25 @@
 #define NOT_MOVEMENT        9
 
 class Gesture {
-	
-	
-	
-	// proces gesture
-	
+    private:
+        int previousGesture;
+        int newGesture;
+
+    public:
+        /*
+        * Constructor de la clase Gesture.
+        */
+        Gesture() {
+            this->previousGesture = (int) NOT_MOVEMENT;
+            this->newGesture = (int) NOT_MOVEMENT;
+        }
+
+        int processGesture(){
+
+
+            return this->newGesture;
+        }
+
 }
 
 #endif
