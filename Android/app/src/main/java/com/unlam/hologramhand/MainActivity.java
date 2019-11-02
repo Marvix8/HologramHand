@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openImageSlideshow(View view) {
-        Intent intent = new Intent(this, ImageSlideshow.class);
+        Intent intent = new Intent(this, VideoPlayer.class);
         startActivity(intent);
     }
 
