@@ -3,16 +3,33 @@
 
 #define BEND_FLEX         0
 #define STRAIGHT_FLEX     1
+#define VOLTAJE_RECEIVED	4.98
 
 class Flex {
 	private:
 		double straightResistance; 	// Resistencia del flex estirado.
 		double bendResistance;		// Resistencia del flex flexionado.
 		double divisorResistance;	// Resistencia del divisor de tensión.
-		double voltaje;				// Voltaje que recibe el flex.
-		int flexPosition;				// Posición en la que se encuentra el dedo.
+		double flexVoltaje;				// Voltaje que recibe el flex.
+		int flexPosition;			// Posición en la que se encuentra el dedo.
+		double actualValue;
+		double angleV;
 	
 	public:
+		// Constructor genérico.
+		Flex() {};
+
+		// Constructor a partir de otro objeto
+		Flex(const Flex& newFlex) {
+			this->straightResistance = newFlex.straightResistance;
+			this->bendResistance = newFlex.bendResistance;
+			this->divisorResistance = newFlex.divisorResistance;
+			this->flexVoltaje = newFlex.flexVoltaje;
+			this->flexPosition = newFlex.flexPosition;
+			this->actualValue = newFlex.actualValue;
+			this->angleV = newFlex.angleV;
+		};
+
 		/*
 		* Constructor del Flex.
 		* Entrada:
@@ -24,6 +41,8 @@ class Flex {
 			this->divisorResistance = divisorResistance;
 			this->flexVoltaje = -1;
 			int flexPosition = -1;
+			this->actualValue = -1;
+			this->angleV = -1;
 		}
 		
 		/*
@@ -32,8 +51,10 @@ class Flex {
 		* 	@sensorValue: valor leído del sensor flex.
 		*	@voltajeReceived: voltaje que recibe el sensor flex.
 		*/
-		void processInformation(double sensorValue, double voltajeReceived) {
-			flexPositionCalculator (angleCalculator(sensorValue, voltajeReceived));
+		double processInformation(double sensorValue) {
+			this->actualValue = sensorValue;
+			flexPositionCalculator (angleCalculator(sensorValue));
+			return sensorValue;
 		}
 		
 		/*
@@ -68,15 +89,27 @@ class Flex {
 			return this->flexPosition;
 		}
 		
+		double getAngle() {
+			return this->angleV;
+		}
+		
+		double getActualValue() {
+			return this->actualValue;
+		}
+		
 	private:
-		double angleCalculator(double sensorValue, double voltajeReceived) {
+		double angleCalculator(double sensorValue) {
 			double flexResistance;
 			
-			this->flexVoltaje = sensorValue * voltajeReceived / 1023.0;
-			flexResistance = this->divisorResistance * (voltajeReceived / this->flexVoltaje - 1.0);
+			this->flexVoltaje = (sensorValue - this->divisorResistance) * (double)VOLTAJE_RECEIVED / 1023.0;
+			flexResistance = this->divisorResistance * ((double)VOLTAJE_RECEIVED / this->flexVoltaje - 1.0);
 
 			// Uso la resistencia calculada para estimar el angulo de inclinación del sensor
-			angle = map(flexResistance, this->straightResistance, this->bendResistance, 0, 90.0);
+			double angle = map(flexResistance, this->straightResistance, this->bendResistance, 0, 90.0);
+			
+			
+			this->angleV = angle;
+			
 			return angle;
 		}
 		
@@ -85,12 +118,12 @@ class Flex {
 				this->flexPosition = (int)BEND_FLEX;
 				return;
 			}
-			else if (flexAngle > 45.0){
+			else {
 				this->flexPosition = (int)STRAIGHT_FLEX;
 				return;
 			}
 		}
 		
-}
+};
 
 #endif
