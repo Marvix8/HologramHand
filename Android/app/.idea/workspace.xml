@@ -13,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +24,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="ZY223VLTK3" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29_x86" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -33,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="8" />
+            <state relative-caret-position="221">
+              <caret line="157" selection-start-line="157" selection-end-line="157" />
               <folding>
                 <element signature="e#3532#4127#0" expanded="true" />
                 <element signature="e#4126#4127#0" expanded="true" />
@@ -49,10 +50,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/Action.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.1.0/9865019bbd2d95e41dede3d8ebf964aa93f97766/appcompat-1.1.0-sources.jar!/androidx/appcompat/app/AppCompatViewInflater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-220">
-              <caret line="403" selection-start-line="403" selection-end-line="403" />
+            <state relative-caret-position="1647">
+              <caret line="426" column="34" lean-forward="true" selection-start-line="426" selection-start-column="34" selection-end-line="426" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -60,12 +70,45 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="90" column="21" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="21" />
+            <state relative-caret-position="814">
+              <caret line="80" column="48" lean-forward="true" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
               <folding>
                 <element signature="e#1871#1872#0" expanded="true" />
                 <element signature="e#1903#1904#0" expanded="true" />
+                <element signature="e#3539#4421#0" expanded="true" />
+                <element signature="e#4420#4421#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ImageSlideshow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/os/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="199" selection-start-line="199" selection-end-line="199" />
             </state>
           </provider>
         </entry>
@@ -83,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/DeviceItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -110,6 +153,8 @@
       <find>unregisterReceiver</find>
       <find>blue</find>
       <find>bluetoothServ</find>
+      <find>bluetoothService</find>
+      <find>Toast</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -122,7 +167,6 @@
         <option value="$PROJECT_DIR$/src/main/res/layout/custom_layout.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ViewPagerAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ImageSlideshow.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
@@ -131,14 +175,16 @@
         <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/DeviceItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/Action.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="220" />
-    <option name="y" value="179" />
-    <option name="width" value="1462" />
-    <option name="height" value="1056" />
+    <option name="x" value="-10" />
+    <option name="y" value="-8" />
+    <option name="width" value="1386" />
+    <option name="height" value="788" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -167,6 +213,17 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="hologramhand" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
+            <path>
+              <item name="HologramHand" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="HologramHand" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -175,7 +232,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="ZY223VLTK3" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-10-19T01:18:29.554Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-02T17:01:51.922Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -289,7 +346,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.22012103" />
@@ -300,21 +356,21 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.32872504" />
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.32872504" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32872504" />
       <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.32872504" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32872504" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="6" weight="0.32936078" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.32872504" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.1797235" />
       <window_info anchor="bottom" id="Find" order="8" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.32936078" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.32872504" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Preview" order="4" weight="0.32980332" />
+      <window_info anchor="right" id="Preview" order="4" visible="true" weight="0.32980332" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout>
   </component>
@@ -363,60 +419,29 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>139</line>
-          <properties />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>137</line>
+          <line>135</line>
           <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>94</line>
-          <properties />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>62</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>102</line>
-          <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>119</line>
+          <line>117</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java</url>
-          <line>127</line>
+          <line>125</line>
           <properties />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/DeviceItem.java</url>
-          <line>10</line>
-          <properties />
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java</url>
-          <line>91</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="app">
+        <watch expression="((BluetoothSocket)this.mSocket).mSocketState" custom="android.bluetooth.BluetoothSocket,java.io.OutputStream" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_image_slide_show.xml" />
@@ -438,16 +463,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ImageSlideshow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ViewPagerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="467">
@@ -455,22 +470,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_about_us.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -531,10 +530,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="14054" column="25" selection-start-line="14054" selection-start-column="25" selection-end-line="14054" selection-end-column="25" />
+          <folding>
+            <element signature="e#576476#576477#0" expanded="true" />
+            <element signature="e#576507#576508#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/DeviceItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
@@ -546,34 +556,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java">
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/os/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="90" column="21" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="21" />
+        <state relative-caret-position="129">
+          <caret line="199" selection-start-line="199" selection-end-line="199" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/content/ContextWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="116" column="19" selection-start-line="116" selection-start-column="19" selection-end-line="116" selection-end-column="19" />
           <folding>
-            <element signature="e#1871#1872#0" expanded="true" />
-            <element signature="e#1903#1904#0" expanded="true" />
+            <element signature="e#3437#3438#0" expanded="true" />
+            <element signature="e#3489#3490#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/Action.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.1.0/9865019bbd2d95e41dede3d8ebf964aa93f97766/appcompat-1.1.0-sources.jar!/androidx/appcompat/app/AppCompatViewInflater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-220">
-          <caret line="403" selection-start-line="403" selection-end-line="403" />
+        <state relative-caret-position="1647">
+          <caret line="426" column="34" lean-forward="true" selection-start-line="426" selection-start-column="34" selection-end-line="426" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="8" />
+        <state relative-caret-position="221">
+          <caret line="157" selection-start-line="157" selection-end-line="157" />
           <folding>
             <element signature="e#3532#4127#0" expanded="true" />
             <element signature="e#4126#4127#0" expanded="true" />
             <element signature="e#5000#5666#0" expanded="true" />
             <element signature="e#5665#5666#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/BluetoothService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="814">
+          <caret line="80" column="48" lean-forward="true" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
+          <folding>
+            <element signature="e#1871#1872#0" expanded="true" />
+            <element signature="e#1903#1904#0" expanded="true" />
+            <element signature="e#3539#4421#0" expanded="true" />
+            <element signature="e#4420#4421#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/unlam/hologramhand/ImageSlideshow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_about_us.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_image_slideshow.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
