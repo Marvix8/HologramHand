@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView deviceList;
     private ArrayAdapter adapter;
     private BluetoothAdapter bluetoothAdapter;
+    private BluetoothService bluetoothService;
     public static final int REQUEST_CODE = 1;
     public static final int ACTIVATE_DISCOVER_BLUETOOTH = 2;
 
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 String[] stringItemArray = item.split("º ");
 
                 BluetoothService btService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+                //this.bluetoothService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+                //this.bluetoothService.write("a");
+                //btService.write("a");
 
             }
         });
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     public void openAboutUs(View view) {
         Intent intent = new Intent(this, AboutUs.class);
         startActivity(intent);
+
     }
 
     public void openImageSlideshow(View view) {

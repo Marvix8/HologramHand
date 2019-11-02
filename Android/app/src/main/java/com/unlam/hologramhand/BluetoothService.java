@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -64,50 +63,38 @@ public class BluetoothService extends Thread {
         this.item = item;
     }
 
-    public void run() {
-        Log.i("THREAD", "Iniciado " + item);
+    //metodo run del hilo, que va a entrar en una espunregisterReceiverera activa para recibir los msjs del HC05
+    public void run()
+    {
         byte[] buffer = new byte[256];
-        int bytesLeidos = 0;
-        int bytesTotales = 0;
-        StringBuilder readMessage = new StringBuilder();
+        int bytes;
 
-        while (!finalizado) {
-            try {
+        //el hilo secundario se queda esperando mensajes del HC05
+        while (true)
+        {
+            try
+            {
+                //se leen los datos del Bluethoot
+                bytes = mmInStream.read(buffer);
+                String readMessage = new String(buffer, 0, bytes);
 
-                while (readMessage.indexOf("|") == -1) {
-                    bytesLeidos = mmInStream.read(buffer);
-                    bytesTotales += bytesLeidos;
-                    readMessage.append(new String(buffer, 0, bytesLeidos));
-                }
-
-                if (readMessage.indexOf("|") != readMessage.length() - 1) {
-                    while ((mmInStream.read(buffer)) != -1) {
-                    }
-                }
-
-                Log.i("SERVICE " + item, readMessage + "");
-                handlerBluetoothIn.obtainMessage(handlerState, bytesTotales, -1, readMessage.toString()).sendToTarget();
-                readMessage = new StringBuilder();
-                buffer = new byte[256];
-                bytesTotales = 0;
-
+                //se muestran en el layout de la activity, utilizando el handler del hilo
+                // principal antes mencionado
+                handlerBluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
             } catch (IOException e) {
+                break;
             }
         }
-
-        try {
-            this.finalize();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
     }
 
-    public void write(byte[] input) {
+    //write method
+    public void write(String input) {
+        byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
         try {
-            Log.i("SERVICE " + item, "Escribiendo bluetooth");
-            mmOutStream.write(input);
+            mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
         } catch (IOException e) {
+            //if you cannot write, close the application
+            Log.i("La conexion fallo", e.toString());
         }
     }
 }
