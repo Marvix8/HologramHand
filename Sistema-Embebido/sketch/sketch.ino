@@ -4,7 +4,7 @@
 */
 #include "lib/Flex.h"
 #include "lib/Hand.h"
-//#include "lib/Gesture.h"
+#include "lib/Gesture.h"
 #include <SoftwareSerial.h>    // para la comunicación bluetooth
 
 /*
@@ -111,32 +111,8 @@ void loop()
       // llamar a hand
       hand.process((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
 
-      //int test = hand.getHandPosition();
+      int test = hand.getHandPosition();
 
-      Serial.println("P");
-      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
-      //Serial.println(bigFinger.processInformation((double)analogRead(FLEX_SENSOR_PULGAR)));
-      Serial.println(hand.getBigFinger().getActualValue());
-      Serial.println(bigFinger.getActualValue());
-      /*Serial.println(hand.getAux());
-      Serial.println(bigFinger.getActualValue());
-      Serial.println(bigFinger.getAngle());*/
-      
-      Serial.println("\n");
-          
-/*
-      Serial.println("I");
-      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
-      Serial.println(indexFinger.getActualValue());
-      Serial.println(indexFinger.getAngle());
-      Serial.println("\n");
-
-      Serial.println("M");
-      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.println(middleFinger.getActualValue());
-      Serial.println(middleFinger.getAngle());
-      Serial.println("\n");*/
-      /*
       Serial.println("EVALUO");
       if (test == 0){
         Serial.println("STAR");
@@ -146,7 +122,7 @@ void loop()
         Serial.println("GOOD");
       } else if (test == 3) {
         Serial.println("ROCK");
-      }*/
+      }
       
       
       // llamar a gesture --> si tuviera unooooooo!!!

@@ -8,16 +8,8 @@
 #define	SCISSORS        	1
 #define GOOD		        2
 #define ROCK		        3
-#define UNDEFINED_POSITION  -1
 
 // Posición de la mano en el espacio
-<<<<<<< HEAD
-#define X_PLUS                      0
-#define Y_PLUS                      1
-#define Z_PLUS                      2
-#define Z_LESS                      3
-#define UNDEFINED_SPACE_POSITION    -1
-=======
 #define X_PLUS	0
 #define Y_PLUS	1
 #define Z_PLUS	2
@@ -41,18 +33,14 @@
 
 class Hand {
 	private:
-		Flex bigFinger; 			// Flex del pulgar.
-		Flex indexFinger;			// Flex del dedo índice.
-		Flex middleFinger;			// Flex del dedo medio
-		//Acelerometer acelerometer; 	// Acelerómetro
+		Flex *bigFinger; 			// Flex del pulgar.
+		Flex *indexFinger;			// Flex del dedo índice.
+		Flex *middleFinger;			// Flex del dedo medio
+		//Acelerometer *acelerometer; 	// Acelerómetro
 		bool calibrated;			// Booleano que indica si la mano está calibrada o no.
 		int handPosition;           // Posición de la mano según sensores flex.
 		int spacePosition;          // Posición de la mano en el espacio según sensor acelerómetro.
 		int movement;
-		
-		
-		int aux;
-		
 
 	public:
 		// Constructor genérico Hand.
@@ -65,21 +53,16 @@ class Hand {
 		*	@middleFinger: Flex del dedo del medio de la mano.
 		*	@acelerometer: Objeto acelerómetro con los valores de sus axis.
 		*/
-		Hand(Flex bigFinger, Flex indexFinger, Flex middleFinger) {
+		Hand(Flex& bigFinger, Flex& indexFinger, Flex& middleFinger): bigFinger(&bigFinger), indexFinger(&indexFinger), middleFinger(&middleFinger) {
 			//, Acelometer aceloremeter) {
-			this->bigFinger = bigFinger;
-			this->indexFinger = indexFinger;
-			this->middleFinger = middleFinger;
 			//this->acelerometer = acelerometer;
 			this->calibrated = false;
 			this->movement = -1;
-			this->aux = -1;
 		}
 		
-		Flex getBigFinger(){
-			return this->bigFinger;
-		}
-		
+		/*
+		* Método utilizado para procesar la información de la mano.
+		*/
 		void process(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
 			updateFingers(bigFingerSensor, indexFingerSensor, middleFingerSensor);
 			processPosition();
@@ -172,10 +155,6 @@ class Hand {
 		void setCalibrated() {
 			this->calibrated = true;
 		}
-		
-		double getAux(){
-			return this->aux;
-		}
 
 	    /*
 	    * Método utilizado para calibrar la mano estirada.
@@ -185,9 +164,9 @@ class Hand {
 	    *   @middleFingerSensorValue: valor del sensor del dedo medio.
 	    */
 		void calibrateStraightHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger.setStraightResistance(bigFingerSensorValue - bigFinger.getDivisorResistance());
-			indexFinger.setStraightResistance(indexFingerSensorValue - indexFinger.getDivisorResistance());
-			middleFinger.setStraightResistance(middleFingerSensorValue - middleFinger.getDivisorResistance());
+			bigFinger->setStraightResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
+			indexFinger->setStraightResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
+			middleFinger->setStraightResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
 		}
 
         /*
@@ -198,25 +177,18 @@ class Hand {
 	    *   @middleFingerSensorValue: valor del sensor del dedo medio.
 	    */
 		void calibrateBendHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger.setBendResistance(bigFingerSensorValue - bigFinger.getDivisorResistance());
-			indexFinger.setBendResistance(indexFingerSensorValue - indexFinger.getDivisorResistance());
-			middleFInger.setBendResistance(middleFingerSensorValue - middleFInger.getDivisorResistance());
+			bigFinger->setBendResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
+			indexFinger->setBendResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
+			middleFinger->setBendResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
 		}
 
-		/*
-		* Método utilizado para procesar la información de la mano.
-		*/
-		void process() {
-			processPosition();
-			processSpacePosition();
-		}
+
 
 	private:
 		void updateFingers(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
-			this->aux = bigFingerSensor;
-			bigFinger.processInformation(bigFingerSensor);
-			indexFinger.processInformation(indexFingerSensor);
-			middleFinger.processInformation(middleFingerSensor);
+			bigFinger->processInformation(bigFingerSensor);
+			indexFinger->processInformation(indexFingerSensor);
+			middleFinger->processInformation(middleFingerSensor);
 		}
 	
 		/*
@@ -224,30 +196,30 @@ class Hand {
 		* dedos una posición dada la información brindada por los sensores flex.
 		*/
 		void processPosition() {
-			if (bigFinger.getFlexPosition() == (int) STRAIGHT_FLEX) {
-				if (indexFinger.getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger.getFlexPosition()  == (int) STRAIGHT_FLEX){
+			if (bigFinger->getFlexPosition() == (int) STRAIGHT_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX){
 					this->handPosition = (int)STAR;
 					return;
 				}
-				else if (indexFinger.getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger.getFlexPosition()  == (int) BEND_FLEX) {
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
 					this->handPosition = (int)GOOD;
 					return;
 				}
-			} else if (bigFinger.getFlexPosition() == (int) BEND_FLEX) {
-				if (indexFinger.getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger.getFlexPosition()  == (int) STRAIGHT_FLEX) {
+			} else if (bigFinger->getFlexPosition() == (int) BEND_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX) {
 					this->handPosition = (int)SCISSORS;
 					return;
 				}
-				else if (indexFinger.getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger.getFlexPosition()  == (int) BEND_FLEX) {
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
 					this->handPosition = (int)ROCK;
 					return;
 				}
 			}
-			this->handPosition = (int)UNDEFINED_POSITION;
+			this->handPosition = (int)UNDEFINED;
 		}
 		/*
 		* Método utilizado para procesar la posición de la mano en el espacio,
