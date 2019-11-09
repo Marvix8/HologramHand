@@ -18,7 +18,7 @@ public class BluetoothService extends Thread {
     private BluetoothSocket btSocket;
     private InputStream mmInStream;
     private OutputStream mmOutStream;
-
+    private StringBuilder recDataString;
     private Handler handlerBluetoothIn;
     private int handlerState = 0;
     private String item;
@@ -53,6 +53,7 @@ public class BluetoothService extends Thread {
 
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
+        this.recDataString  = new StringBuilder();
     }
 
     public void setHandler(Handler handlerBluetoothIn) {
@@ -63,7 +64,7 @@ public class BluetoothService extends Thread {
         this.item = item;
     }
 
-    //metodo run del hilo, que va a entrar en una espera activa para recibir los msjs del HC05
+    //metodo run del hilo, que va a entrar en una espunregisterReceiverera activa para recibir los msjs del HC05
     public void run()
     {
         byte[] buffer = new byte[256];
@@ -77,9 +78,10 @@ public class BluetoothService extends Thread {
                 //se leen los datos del Bluethoot
                 bytes = mmInStream.read(buffer);
                 String readMessage = new String(buffer, 0, bytes);
-
+                System.out.println(readMessage);
                 //se muestran en el layout de la activity, utilizando el handler del hilo
                 // principal antes mencionado
+
                 handlerBluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
             } catch (IOException e) {
                 break;
@@ -97,4 +99,33 @@ public class BluetoothService extends Thread {
             Log.i("La conexion fallo", e.toString());
         }
     }
+
+    //Handler que sirve que permite mostrar datos en el Layout al hilo secundario
+    public Handler HandlerMensajeHiloPrincipal()
+    {
+        return new Handler() {
+            public void handleMessage(android.os.Message msg)
+            {
+                //si se recibio un msj del hilo secundario
+                if (msg.what == handlerState)
+                {
+                    //voy concatenando el msj
+                    String readMessage = (String) msg.obj;
+                    recDataString.append(readMessage);
+                    int endOfLineIndex = recDataString.indexOf("\r\n");
+
+                    //cuando recibo toda una linea la muestro en el layout
+                    if (endOfLineIndex > 0)
+                    {
+                        String dataInPrint = recDataString.substring(0, endOfLineIndex);
+                        System.out.println("---->" + dataInPrint);
+
+                        recDataString.delete(0, recDataString.length());
+                    }
+                }
+            }
+        };
+
+    }
+
 }

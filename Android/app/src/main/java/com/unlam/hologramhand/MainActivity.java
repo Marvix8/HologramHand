@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView deviceList;
     private ArrayAdapter adapter;
     private BluetoothAdapter bluetoothAdapter;
+    public BluetoothService bluetoothService;
     public static final int REQUEST_CODE = 1;
     public static final int ACTIVATE_DISCOVER_BLUETOOTH = 2;
 
@@ -88,17 +89,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // TODO Auto-generated method stub
-
                 Toast.makeText(MainActivity.this, adapter.getItem(position).toString(), Toast.LENGTH_LONG).show();
-
                 String item = adapter.getItem(position).toString();
                 String[] stringItemArray = item.split("º ");
-
-                BluetoothService btService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+                MainActivity.this.bluetoothService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+                MainActivity.this.bluetoothService.setHandler(MainActivity.this.bluetoothService.HandlerMensajeHiloPrincipal());
+                MainActivity.this.bluetoothService.start();
 
             }
         });
+    }
+
+    private void printToaster(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     private void validateBluetoothState() {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openImageSlideshow(View view) {
-        Intent intent = new Intent(this, ImageSlideshow.class);
+        Intent intent = new Intent(this, VideoPlayer.class);
         startActivity(intent);
     }
 
@@ -148,13 +151,10 @@ public class MainActivity extends AppCompatActivity {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 DeviceItem newDevice = new DeviceItem(device.getName(), device.getAddress(), "false");
-
                 adapter.add(newDevice.toString());
-
                 if (deviceList == null) {
                     deviceList = (ListView) findViewById(R.id.listView);
                 }
-
                 deviceList.setAdapter(adapter);
             }
         }
