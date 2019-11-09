@@ -9,17 +9,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class VideoPlayer extends AppCompatActivity {
 
+
+    private VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
-        VideoView videoPlayer = (VideoView) findViewById(R.id.video_player);
-        String videoPath = "android.resource\\" +getPackageName()+ "Android\\app\\src\\main\\res\\raw\\holograma";
-        Uri uri = Uri.parse(videoPath);
-        //videoPlayer.setVideoPath("");
-        videoPlayer.setVideoURI(uri);
+        this.videoView = (VideoView) findViewById(R.id.video_player);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.holograma);
         MediaController mediaController = new MediaController(this);
-        videoPlayer.setMediaController(mediaController);
-        mediaController.setAnchorView(videoPlayer);
+        mediaController.setAnchorView(videoView);
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
     }
 }
