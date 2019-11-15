@@ -12,13 +12,16 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class VideoPlayer extends AppCompatActivity{
+public class VideoPlayer extends AppCompatActivity {
 
     private VideoView videoView;
+    private MessageReceiver mMessageReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.mMessageReceiver = new MessageReceiver();
+        this.mMessageReceiver.setActivityContext(this);
         setContentView(R.layout.activity_video_player);
         this.videoView = (VideoView) findViewById(R.id.video_player);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.holograma);
@@ -34,20 +37,9 @@ public class VideoPlayer extends AppCompatActivity{
 
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String instruction = intent.getStringExtra("instruction");
-
-            switch (instruction){
-                case "P":
-
-                    break;
-            }
-
-        }
-    };
+    public VideoView getVideoView() {
+        return videoView;
+    }
 
     @Override
     protected void onDestroy() {

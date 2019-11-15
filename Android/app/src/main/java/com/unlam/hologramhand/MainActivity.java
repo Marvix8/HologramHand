@@ -112,8 +112,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAboutUs(View view) {
-        Intent intent = new Intent(this, AboutUs.class);
-        startActivity(intent);
+        this.bluetoothService.write("a");
+//        Intent intent = new Intent(this, AboutUs.class);
+//        startActivity(intent);
     }
 
     public void openImageSlideshow(View view) {
