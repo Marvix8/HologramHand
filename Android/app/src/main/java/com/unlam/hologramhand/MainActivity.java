@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public static final int ACTIVATE_DISCOVER_BLUETOOTH = 2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 String item = adapter.getItem(position).toString();
                 String[] stringItemArray = item.split("º ");
                 MainActivity.this.bluetoothService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
-                MainActivity.this.bluetoothService.setHandler(MainActivity.this.bluetoothService.HandlerMensajeHiloPrincipal());
+                MainActivity.this.bluetoothService.setHandler(MainActivity.this.bluetoothService.HandlerMensajeHiloPrincipal(MainActivity.this));
                 MainActivity.this.bluetoothService.start();
 
             }

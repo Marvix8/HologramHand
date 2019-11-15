@@ -3,8 +3,13 @@ package com.unlam.hologramhand;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -101,9 +106,12 @@ public class BluetoothService extends Thread {
     }
 
     //Handler que sirve que permite mostrar datos en el Layout al hilo secundario
-    public Handler HandlerMensajeHiloPrincipal()
+    public Handler HandlerMensajeHiloPrincipal(Context mainContext)
     {
+        final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mainContext);
+
         return new Handler() {
+
             public void handleMessage(android.os.Message msg)
             {
                 //si se recibio un msj del hilo secundario
@@ -117,8 +125,12 @@ public class BluetoothService extends Thread {
                     //cuando recibo toda una linea la muestro en el layout
                     if (endOfLineIndex > 0)
                     {
-                        String dataInPrint = recDataString.substring(0, endOfLineIndex);
-                        System.out.println("---->" + dataInPrint);
+                        String instruction = recDataString.substring(0, endOfLineIndex);
+                        System.out.println("---->" + instruction);
+
+                        Intent intent = new Intent("gesture-instruction");
+                        intent.putExtra("instruction", instruction);
+                        localBroadcastManager.sendBroadcast(intent);
 
                         recDataString.delete(0, recDataString.length());
                     }
