@@ -51,4 +51,18 @@
     <!-- Message Receiver-->
     <string name="environment_light">0.0</string>
     <string name="accelerometer_z_axis_gravity">9.5</string>
+
+    <!-- MainActivity -->
+    <string name="shake_update_time">100</string>;
+    <string name="ten_seconds">10000</string>;
+    <string name="an_error_has_occurred">Ocurrió un error.</string>;
+    <string name="permission_granted">Permission granted.</string>;
+    <string name="turn_on_bluetooth_message">Encienda el bluetooth.</string>;
+    <string name="error_finding_devices">Error al buscar dispositivos.</string>;
+    <string name="turning_off_bluetooth">Apagando Bluetooth.</string>;
+    <string name="turning_on_bluetooth">Activando Bluetooth.</string>;
+    <string name="axis_x">0</string>;
+    <string name="axis_y">1</string>;
+    <string name="axis_z">2</string>;
+
 </resources>

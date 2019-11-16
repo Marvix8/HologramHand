@@ -1,8 +1,5 @@
 package com.unlam.hologramhand;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,6 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,8 +21,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    private static final float SHAKE_THRESHOLD = 800;
     private Switch bluetoothSwitch;
     private ListView deviceList;
     private ArrayAdapter adapter;
@@ -30,9 +36,43 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public static final int ACTIVATE_DISCOVER_BLUETOOTH = 2;
     private final BroadcastReceiver bReciever = this.createBroadcastReceiver();
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private long lastUpdate;
+    private float x;
+    private float y;
+    private float z;
+    private float last_x;
+    private float last_y;
+    private float last_z;
+    private int shakeUpdateTime;
+    private int tenSeconds;
+    private int axisX;
+    private int axisY;
+    private int axisZ;
+    private String anErrorHasOccurred;
+    private String permissionGranted;
+    private String turnOnBluetoothMessage;
+    private String errorFindingDevices;
+    private String turningOffBluetooth;
+    private String turningOnBluetooth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.shakeUpdateTime = Integer.valueOf(getString(R.string.shake_update_time));
+        this.tenSeconds = Integer.valueOf(getString(R.string.ten_seconds));
+        this.axisX = Integer.valueOf(getString(R.string.axis_x));
+        this.axisY = Integer.valueOf(getString(R.string.axis_y));
+        this.axisZ = Integer.valueOf(getString(R.string.axis_z));
+        this.anErrorHasOccurred = getString(R.string.an_error_has_occurred);
+        this.permissionGranted = getString(R.string.permission_granted);
+        this.turnOnBluetoothMessage = getString(R.string.turn_on_bluetooth_message);
+        this.errorFindingDevices = getString(R.string.error_finding_devices);
+        this.turningOffBluetooth = getString(R.string.turning_off_bluetooth);
+        this.turningOnBluetooth = getString(R.string.turning_on_bluetooth);
+
+
         super.onCreate(savedInstanceState);
         adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_activated_1);
         setContentView(R.layout.activity_main);
@@ -41,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.setStateBluetoothSwitch(isBluetoothEnabled());
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_CODE);
+        this.initializeSensors();
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
         }
 
         if (bluetoothSwitch != null) {
@@ -55,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         deviceList.setOnItemClickListener(this.getOnClickListenerBluetoothList());
     }
+
 
     public void openVideoPlayer(View view) {
         Intent intent = new Intent(this, VideoPlayer.class);
@@ -84,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOn, 0);
-            ToasterPrinter.printToasterShort("Activando.", this);
+            ToasterPrinter.printToasterShort(turningOnBluetooth, this);
         }
     }
 
@@ -97,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 deviceList.setAdapter(null);
             }
             bluetoothAdapter.disable();
-            ToasterPrinter.printToasterShort("Apagando Bluetooth.", this);
+            ToasterPrinter.printToasterShort(turningOffBluetooth, this);
         }
     }
 
@@ -114,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isBluetoothEnabled() {
-        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+        return this.existBluetoothAdapter() && this.isBluetoothAdapterEnabled();
     }
 
     private void setStateBluetoothSwitch(boolean state) {
@@ -134,9 +177,9 @@ public class MainActivity extends AppCompatActivity {
         ImageButton bluetoothButton = (ImageButton) findViewById(R.id.searchDevices);
 
         if (!this.existBluetoothAdapter()) {
-            ToasterPrinter.printToasterShort("Error al buscar dispositivos.", this);
+            ToasterPrinter.printToasterShort(errorFindingDevices, this);
         } else if (this.existBluetoothAdapter() && !this.isBluetoothAdapterEnabled()) {
-            ToasterPrinter.printToasterShort("Encienda el bluetooth.", this);
+            ToasterPrinter.printToasterShort(turnOnBluetoothMessage, this);
         } else {
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             if (!bluetoothAdapter.isDiscovering()) {
@@ -163,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private BroadcastReceiver createBroadcastReceiver() {
-     return new BroadcastReceiver() {
+        return new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -183,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE: {
-                System.out.println("permission granted");
+                System.out.println(permissionGranted);
             }
         }
     }
@@ -198,7 +241,56 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception ex) {
-            ToasterPrinter.printToasterShort("Ocurrio un error", this);
+            ToasterPrinter.printToasterShort(anErrorHasOccurred, this);
         }
     }
+
+
+    private void initializeSensors() {
+        this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        this.accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        this.sensorManager.registerListener(this, this.accelerometer, SensorManager.SENSOR_DELAY_GAME);
+
+        this.InitializeAccelerometerVariables();
+    }
+
+    private void InitializeAccelerometerVariables() {
+        lastUpdate = Integer.valueOf(this.getString(R.string.zero));
+        x = Integer.valueOf(this.getString(R.string.zero));
+        y = Integer.valueOf(this.getString(R.string.zero));
+        z = Integer.valueOf(this.getString(R.string.zero));
+        last_x = Integer.valueOf(this.getString(R.string.zero));
+        last_y = Integer.valueOf(this.getString(R.string.zero));
+        last_z = Integer.valueOf(this.getString(R.string.zero));
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            long curTime = System.currentTimeMillis();
+            // only allow one update every 100ms.
+            if ((curTime - lastUpdate) > this.shakeUpdateTime) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+
+                x = event.values[axisX];
+                y = event.values[axisY];
+                z = event.values[axisZ];
+
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * tenSeconds;
+
+                if (speed > SHAKE_THRESHOLD) {
+                    this.bluetoothSwitch.performClick();
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 }
