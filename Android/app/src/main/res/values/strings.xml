@@ -35,4 +35,16 @@
 
     <string name="instruction">instruction</string>
 
+    <!-- BluetoothService -->
+    <string name="conection_failure">La conexion falló</string>
+    <string name="buffer_size">256</string>
+    <string name="minus_one">-1</string>
+    <string name="failed">falló </string>
+    <string name="socket">SOCKET</string>
+    <string name="conected">conectado </string>
+    <string name="fail_device">fallo dispositivo </string>
+
+
+
+
 </resources>

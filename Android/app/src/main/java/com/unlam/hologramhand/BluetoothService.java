@@ -18,6 +18,13 @@ import java.util.UUID;
 public class BluetoothService extends Thread {
 
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private final Context context;
+    private final String conectionFailure;
+    private final int minusOne;
+    private final String socket;
+    private final String failDevice;
+    private final String conected;
+    private final String failed;
     private BluetoothAdapter btAdapter;
     private BluetoothDevice btDevice;
     private BluetoothSocket btSocket;
@@ -26,38 +33,45 @@ public class BluetoothService extends Thread {
     private StringBuilder recDataString;
     private Handler handlerBluetoothIn;
     private int handlerState = 0;
-    private String item;
-    private boolean finalizado = false;
 
-    public BluetoothService(String deviceAddress, final String item) {
-        this.item = item;
+    public BluetoothService(Context context, String deviceAddress, final String item) {
 
-        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.context = context;
 
-        btDevice = btAdapter.getRemoteDevice(deviceAddress);
+        this.minusOne = Integer.valueOf(this.context.getString(R.string.minus_one));
+        this.conectionFailure = this.context.getString(R.string.conection_failure);
+        this.socket = this.context.getString(R.string.socket);
+        this.conected = this.context.getString(R.string.conected);
+        this.failDevice = this.context.getString(R.string.fail_device);
+        this.failed = this.context.getString(R.string.failed);
+
+        this.btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        this.btDevice = btAdapter.getRemoteDevice(deviceAddress);
+
         try {
-            btSocket = btDevice.createRfcommSocketToServiceRecord(BTMODULEUUID);
+            this.btSocket = btDevice.createRfcommSocketToServiceRecord(BTMODULEUUID);
         } catch (IOException e) {
-            Log.i("SOCKET", "fallo dispositivo " + item);
+            Log.i(this.socket, this.failDevice + item);
         }
         try {
-            btSocket.connect();
-            Log.i("SOCKET", "conectado " + item);
+            this.btSocket.connect();
+            Log.i(this.socket, this.conected + item);
         } catch (IOException e) {
-            Log.i("SOCKET", "fallo " + item + " " + e.toString());
+            Log.i(this.socket, this.failed + item + " " + e.toString());
         }
 
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
 
         try {
-            tmpIn = btSocket.getInputStream();
-            tmpOut = btSocket.getOutputStream();
+            tmpIn = this.btSocket.getInputStream();
+            tmpOut = this.btSocket.getOutputStream();
         } catch (IOException e) {
         }
 
-        mmInStream = tmpIn;
-        mmOutStream = tmpOut;
+        this.mmInStream = tmpIn;
+        this.mmOutStream = tmpOut;
         this.recDataString  = new StringBuilder();
     }
 
@@ -65,14 +79,13 @@ public class BluetoothService extends Thread {
         this.handlerBluetoothIn = handlerBluetoothIn;
     }
 
-    public void setItem(String item) {
-        this.item = item;
-    }
-
     //metodo run del hilo, que va a entrar en una espunregisterReceiverera activa para recibir los msjs del HC05
     public void run()
     {
-        byte[] buffer = new byte[256];
+        final int bufferSize = 256;
+        final int zero = 0;
+
+        byte[] buffer = new byte[bufferSize];
         int bytes;
 
         //el hilo secundario se queda esperando mensajes del HC05
@@ -81,13 +94,13 @@ public class BluetoothService extends Thread {
             try
             {
                 //se leen los datos del Bluethoot
-                bytes = mmInStream.read(buffer);
-                String readMessage = new String(buffer, 0, bytes);
+                bytes = this.mmInStream.read(buffer);
+                String readMessage = new String(buffer, zero, bytes);
                 System.out.println(readMessage);
                 //se muestran en el layout de la activity, utilizando el handler del hilo
                 // principal antes mencionado
 
-                handlerBluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
+                this.handlerBluetoothIn.obtainMessage(this.handlerState, bytes, this.minusOne, readMessage).sendToTarget();
             } catch (IOException e) {
                 break;
             }
@@ -98,15 +111,15 @@ public class BluetoothService extends Thread {
     public void write(String input) {
         byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
         try {
-            mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
+            this.mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
         } catch (IOException e) {
             //if you cannot write, close the application
-            Log.i("La conexion fallo", e.toString());
+            Log.i(this.conectionFailure, e.toString());
         }
     }
 
     //Handler que sirve que permite mostrar datos en el Layout al hilo secundario
-    public Handler HandlerMensajeHiloPrincipal(Context mainContext)
+    public Handler HandlerMensajeHiloPrincipal(final Context mainContext)
     {
         final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mainContext);
 
@@ -124,16 +137,13 @@ public class BluetoothService extends Thread {
                     //int endOfLineIndex = recDataString.indexOf("\r\n");
 
                     //cuando recibo toda una linea la muestro en el layout
-                    if (readMessage.length() > 0)
+                    if (readMessage.length() > Integer.valueOf(mainContext.getString(R.string.zero)))
                     {
-                        //String instruction = recDataString.substring(0, endOfLineIndex);
-                        //System.out.println("---->" + instruction);
-
-                        Intent intent = new Intent("gesture-instruction");
-                        intent.putExtra("instruction", readMessage);
+                        Intent intent = new Intent(mainContext.getString(R.string.gesture_instruction));
+                        intent.putExtra(mainContext.getString(R.string.instruction), readMessage);
                         localBroadcastManager.sendBroadcast(intent);
 
-                        recDataString.delete(0, recDataString.length());
+                        recDataString.delete(Integer.valueOf(mainContext.getString(R.string.zero)), recDataString.length());
                     }
                 }
             }
