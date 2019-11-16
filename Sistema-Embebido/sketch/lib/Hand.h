@@ -2,6 +2,7 @@
 #define _Hand_h
 
 #include "Flex.h"
+#include "Acelerometer.h"
 
 // Posición de la mano
 #define STAR		0
@@ -217,24 +218,28 @@ class Hand {
 			
 			this->handPosition = (int)UNDEFINED;
 		}
-/*
+
 		void processSpacePosition() {
-			if (this->acelerometer.getXValue() >= 0.9) {
+			if (this->acelerometer.getAxisX() >= 0.8 &&
+				this->acelerometer.getAxisX() <= 1.3) {
 				spacePosition = (int)X_PLUS;
 				return;				
-			} else if (this-->acelerometer.getYValue() >= 0.9) {
+			} else if (this-->acelerometer.getAxisY() >= 0.8 &&
+				this->acelerometer.getAxisY() <= 1.3) {
 				spacePosition = (int)Y_PLUS;
 				return;				
-			} else if (this-->acelerometer.getZValue() >= 0.9) {
+			} else if (this-->acelerometer.getAxisZ() >= 0.8 &&
+				this->acelerometer.getAxisZ() <= 1.3) {
 				spacePosition = (int)Z_PLUS;
 				return;				
-			} else if (this-->acelerometer.getYValue() <= -0.9) {
+			} else if (this-->acelerometer.getAxisY() <= -0.8 &&
+				this->acelerometer.getAxisY() <= 1.3) {
 				spacePosition = (int)Z_LESS;
 				return;				
 			}
 			
 			this->spacePosition = (int)UNDEFINED;
-		}*/
+		}
 };
 
 #endif

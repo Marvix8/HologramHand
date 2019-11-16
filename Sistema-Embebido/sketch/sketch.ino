@@ -4,7 +4,9 @@
 */
 #include "lib/Flex.h"
 #include "lib/Hand.h"
-//#include "lib/Gesture.h"
+#include "lib/Gesture.h"
+#include "lib/MPU9250.h"
+#include "lib/Kalman.h"
 #include <SoftwareSerial.h>    // para la comunicación bluetooth
 
 /*
@@ -63,7 +65,16 @@ Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX_PULGAR);
 Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX_INDICE);
 Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX_MEDIO);
 Hand hand(bigFinger, indexFinger, middleFinger);
-//Gesture gesture(hand);
+Gesture gesture(hand);
+
+// Objeto de acelerómetros
+MPU9250 IMU(Wire,0x68);
+Acelerometer acelerometer;
+
+// Kalman para acelerometro
+Kalman acelerometerXK(0.7, 15, 1023, 0);
+Kalman acelerometerYK(0.8, 15, 1023, 0);
+Kalman acelerometerZK(0.8, 8, 1023, 0);
 
 // Prototipos de funciones
 void sendInformationViaBluetooth (const int);
