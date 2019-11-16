@@ -47,13 +47,12 @@ Input currentInput = InDefault;
 class Gesture {
 	
 	public:
-		Hand hand;
+		Hand *hand;
 		int action;
 		bool hasChanged;
 		
 		// Constructor de la clase Gesture
-		Gesture(Hand hand) {
-			this->hand = hand;
+		Gesture(Hand& hand): hand(&hand) {
 			this->action = -1;
 			this->hasChanged = false;
 		}
@@ -78,7 +77,7 @@ class Gesture {
 		void readInput() {
 			currentInput = Input::InDefault;
 			
-			switch (hand.getMovement()) {
+			switch (hand->getMovement()) {
 				case (int)SPZ: currentInput = Input::InStarPZ; break;
 				case (int)SNZ: currentInput = Input::InStarNZ; break;
 				case (int)SPY: currentInput = Input::InStarPY; break;

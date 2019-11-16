@@ -34,10 +34,10 @@
 
 class Hand {
 	private:
-		Flex bigFinger; 			// Flex del pulgar.
-		Flex indexFinger;			// Flex del dedo índice.
-		Flex middleFinger;			// Flex del dedo medio
-		//Acelerometer acelerometer; 	// Acelerómetro
+		Flex *bigFinger; 			// Flex del pulgar.
+		Flex *indexFinger;			// Flex del dedo índice.
+		Flex *middleFinger;			// Flex del dedo medio
+		Acelerometer *acelerometer; 	// Acelerómetro
 		bool calibrated;			// Booleano que indica si la mano está calibrada o no.
 		int handPosition;
 		int spacePosition;
@@ -58,25 +58,17 @@ class Hand {
 		*	@middleFinger: Flex del dedo del medio de la mano.
 		*	@acelerometer: Objeto acelerómetro con los valores de sus axis.
 		*/
-		Hand(Flex bigFinger, Flex indexFinger, Flex middleFinger) {
-			//, Acelometer aceloremeter) {
-			this->bigFinger = bigFinger;
-			this->indexFinger = indexFinger;
-			this->middleFinger = middleFinger;
-			//this->acelerometer = acelerometer;
+		Hand(Flex& bigFinger, Flex& indexFinger, Flex& middleFinger, Acelerometer& acelerometer): 
+		bigFinger(&bigFinger), indexFinger(&indexFinger), middleFinger(&middleFinger), acelerometer(&acelerometer) {
 			this->calibrated = false;
 			this->movement = -1;
 			this->aux = -1;
 		}
-		
-		Flex getBigFinger(){
-			return this->bigFinger;
-		}
-		
+
 		void process(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
 			updateFingers(bigFingerSensor, indexFingerSensor, middleFingerSensor);
 			processPosition();
-			//processSpacePosition();
+			processSpacePosition();
 			spacePosition = (int)X_PLUS;
 			switch(spacePosition) {
 				case (int)X_PLUS:
@@ -171,46 +163,45 @@ class Hand {
 		}
 		
 		void calibrateStraightHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger.setStraightResistance(bigFingerSensorValue - bigFinger.getDivisorResistance());
-			indexFinger.setStraightResistance(indexFingerSensorValue - indexFinger.getDivisorResistance());
-			middleFinger.setStraightResistance(middleFingerSensorValue - middleFinger.getDivisorResistance());
+			bigFinger->setStraightResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
+			indexFinger->setStraightResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
+			middleFinger->setStraightResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
 		}
 		
 		void calibrateBendHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger.setBendResistance(bigFingerSensorValue - bigFinger.getDivisorResistance());
-			indexFinger.setBendResistance(indexFingerSensorValue - indexFinger.getDivisorResistance());
-			middleFinger.setBendResistance(middleFingerSensorValue - middleFinger.getDivisorResistance());
+			bigFinger->setBendResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
+			indexFinger->setBendResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
+			middleFinger->setBendResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
 		}
 		
 	private:
 		void updateFingers(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
-			this->aux = bigFingerSensor;
-			bigFinger.processInformation(bigFingerSensor);
-			indexFinger.processInformation(indexFingerSensor);
-			middleFinger.processInformation(middleFingerSensor);
+			bigFinger->processInformation(bigFingerSensor);
+			indexFinger->processInformation(indexFingerSensor);
+			middleFinger->processInformation(middleFingerSensor);
 		}
 	
 		void processPosition() {
-			if (bigFinger.getFlexPosition() == (int) STRAIGHT_FLEX) {
-				if (indexFinger.getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger.getFlexPosition()  == (int) STRAIGHT_FLEX){
+			if (bigFinger->getFlexPosition() == (int) STRAIGHT_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX){
 					this->handPosition = (int)STAR;
 					return;
 				}
-				else if (indexFinger.getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger.getFlexPosition()  == (int) BEND_FLEX) {
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
 					this->handPosition = (int)GOOD;
 					return;
 				}
-			} else if (bigFinger.getFlexPosition() == (int) BEND_FLEX) {
-				if (indexFinger.getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger.getFlexPosition()  == (int) STRAIGHT_FLEX) {
+			} else if (bigFinger->getFlexPosition() == (int) BEND_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX) {
 					this->handPosition = (int)SCISSORS;
 					return;
 				}
 					
-				else if (indexFinger.getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger.getFlexPosition()  == (int) BEND_FLEX) {
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
 					this->handPosition = (int)ROCK;
 					return;
 				}
@@ -220,20 +211,20 @@ class Hand {
 		}
 
 		void processSpacePosition() {
-			if (this->acelerometer.getAxisX() >= 0.8 &&
-				this->acelerometer.getAxisX() <= 1.3) {
+			if (this->acelerometer->getAxisX() >= 0.8 &&
+				this->acelerometer->getAxisX() <= 1.3) {
 				spacePosition = (int)X_PLUS;
 				return;				
-			} else if (this-->acelerometer.getAxisY() >= 0.8 &&
-				this->acelerometer.getAxisY() <= 1.3) {
+			} else if (this->acelerometer->getAxisY() >= 0.8 &&
+				this->acelerometer->getAxisY() <= 1.3) {
 				spacePosition = (int)Y_PLUS;
 				return;				
-			} else if (this-->acelerometer.getAxisZ() >= 0.8 &&
-				this->acelerometer.getAxisZ() <= 1.3) {
+			} else if (this->acelerometer->getAxisZ() >= 0.8 &&
+				this->acelerometer->getAxisZ() <= 1.3) {
 				spacePosition = (int)Z_PLUS;
 				return;				
-			} else if (this-->acelerometer.getAxisY() <= -0.8 &&
-				this->acelerometer.getAxisY() <= 1.3) {
+			} else if (this->acelerometer->getAxisY() <= -0.8 &&
+				this->acelerometer->getAxisY() <= 1.3) {
 				spacePosition = (int)Z_LESS;
 				return;				
 			}

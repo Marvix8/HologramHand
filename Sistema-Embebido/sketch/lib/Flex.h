@@ -19,17 +19,6 @@ class Flex {
 		// Constructor genérico.
 		Flex() {};
 
-		// Constructor a partir de otro objeto
-		Flex(const Flex& newFlex) {
-			this->straightResistance = newFlex.straightResistance;
-			this->bendResistance = newFlex.bendResistance;
-			this->divisorResistance = newFlex.divisorResistance;
-			this->flexVoltaje = newFlex.flexVoltaje;
-			this->flexPosition = newFlex.flexPosition;
-			this->actualValue = newFlex.actualValue;
-			this->angleV = newFlex.angleV;
-		};
-
 		/*
 		* Constructor del Flex.
 		* Entrada:

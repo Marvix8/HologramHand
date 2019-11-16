@@ -64,12 +64,14 @@ int mensajeBluetooth;
 Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX_PULGAR);
 Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX_INDICE);
 Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX_MEDIO);
-Hand hand(bigFinger, indexFinger, middleFinger);
-Gesture gesture(hand);
-
 // Objeto de acelerómetros
 MPU9250 IMU(Wire,0x68);
 Acelerometer acelerometer;
+
+Hand hand(bigFinger, indexFinger, middleFinger, acelerometer);
+Gesture gesture(hand);
+
+
 
 // Kalman para acelerometro
 Kalman acelerometerXK(0.7, 15, 1023, 0);
@@ -127,7 +129,6 @@ void loop()
       Serial.println("P");
       Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
       //Serial.println(bigFinger.processInformation((double)analogRead(FLEX_SENSOR_PULGAR)));
-      Serial.println(hand.getBigFinger().getActualValue());
       Serial.println(bigFinger.getActualValue());
       /*Serial.println(hand.getAux());
       Serial.println(bigFinger.getActualValue());

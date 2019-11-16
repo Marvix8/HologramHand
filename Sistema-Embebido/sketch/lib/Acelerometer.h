@@ -3,30 +3,30 @@
 
 class Acelerometer {
   private:
-	axisX;
-	axisY;
-	axisZ;
+	double axisX;
+	double axisY;
+	double axisZ;
   
   public:
 	// Constructor genérico.
 	Acelerometer() {}
 	
 	setAxisValues(double x, double y, double z) {
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->axisX = x;
+		this->axisY = y;
+		this->axisZ = z;
 	}
 	
 	double getAxisX() {
-		return this->x;
+		return this->axisX;
 	}
 	
-	double getAxisY {
-		return this->y;
+	double getAxisY() {
+		return this->axisY;
 	}
 	
-	double getAxisZ {
-		return this->z;
+	double getAxisZ() {
+		return this->axisZ;
 	}
 
 };
