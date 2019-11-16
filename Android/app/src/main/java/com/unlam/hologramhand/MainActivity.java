@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 ToasterPrinter.printToasterLong(adapter.getItem(position).toString(), MainActivity.this);
                 String item = adapter.getItem(position).toString();
                 String[] stringItemArray = item.split("º ");
-                MainActivity.this.bluetoothService = new BluetoothService(stringItemArray[1], stringItemArray[0]);
+                MainActivity.this.bluetoothService = new BluetoothService(MainActivity.this, stringItemArray[1], stringItemArray[0]);
                 MainActivity.this.bluetoothService.setHandler(MainActivity.this.bluetoothService.HandlerMensajeHiloPrincipal(MainActivity.this));
                 MainActivity.this.bluetoothService.start();
             }
