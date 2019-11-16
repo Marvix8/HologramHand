@@ -4,35 +4,27 @@ public class DeviceItem {
 
     private String name;
     private String address;
-    private String asdoolean;
 
-    public DeviceItem(String name, String address, String asdoolean){
-
+    public DeviceItem(String name, String address) {
         this.name = name;
         this.address = address;
-        this.asdoolean = asdoolean;
     }
-
 
     public String getAddress() {
         return address;
-    }
-
-    public String getAsdoolean() {
-        return asdoolean;
     }
 
     public String getName() {
         return name;
     }
 
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        sb.append(this.getName())
-            .append(" º ")
-            .append(this.getAddress());
+        stringBuilder.append(this.getName())
+                .append(" º ")
+                .append(this.getAddress());
 
-        return sb.toString();
+        return stringBuilder.toString();
     }
 }
