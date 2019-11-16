@@ -49,6 +49,6 @@
     <string name="accept_alert_dialog">Aceptar</string>
 
     <!-- Message Receiver-->
-    <string name="environment_light">0.0</string>
+    <string name="environment_light">1.0</string>
     <string name="accelerometer_z_axis_gravity">9.5</string>
 </resources>

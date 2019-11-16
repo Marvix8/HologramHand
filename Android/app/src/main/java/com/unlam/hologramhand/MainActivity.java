@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_activated_1);
         setContentView(R.layout.activity_main);
+        adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_activated_1);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothSwitch = (Switch) findViewById(R.id.bluetoothSwitch);
 
