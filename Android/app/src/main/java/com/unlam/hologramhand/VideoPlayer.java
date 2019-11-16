@@ -1,12 +1,10 @@
 package com.unlam.hologramhand;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.MediaController;
+import android.view.WindowManager;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,35 +14,47 @@ public class VideoPlayer extends AppCompatActivity {
 
     private VideoView videoView;
     private MessageReceiver mMessageReceiver;
+    private String resourceBaseURI;
+    private String slash;
+    private String gestureInstruction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mMessageReceiver = new MessageReceiver();
+        this.initializeVariables();
+        this.mMessageReceiver = new MessageReceiver(this);
         this.mMessageReceiver.setActivityContext(this);
+        getSupportActionBar().hide(); //OCULTA BARRA DE TITLE ACTIVITY
         setContentView(R.layout.activity_video_player);
+
         this.videoView = (VideoView) findViewById(R.id.video_player);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.holograma);
-        MediaController mediaController = new MediaController(this);
-        mediaController.setAnchorView(videoView);
-        videoView.setMediaController(mediaController);
+        Uri uri = Uri.parse(this.getURIVideo());
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //OCULTA BARRA DE ESTADO ANDROID
+
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("gesture-instruction"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(this.gestureInstruction));
+    }
 
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 
     public VideoView getVideoView() {
         return videoView;
     }
 
-    @Override
-    protected void onDestroy() {
-        // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        super.onDestroy();
+    private void initializeVariables() {
+        this.resourceBaseURI = getString(R.string.resource_base_URI);
+        this.slash = getString(R.string.slash);
+        this.gestureInstruction = getString(R.string.gesture_instruction);
+    }
+
+    private String getURIVideo() {
+        return this.resourceBaseURI + getPackageName() + this.slash + R.raw.holograma;
     }
 }

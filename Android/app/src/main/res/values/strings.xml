@@ -16,4 +16,23 @@
     <string name="place_third_name">Krause, Ezequiel</string>
     <string name="place_fourth_name">Scarpello, Franco</string>
 
+    <!-- VideoPlayer -->
+    <string name="resource_base_URI">android.resource://</string>
+    <string name="slash">/</string>
+    <string name="gesture_instruction">gesture-instruction</string>
+
+    <!-- MessageReceiver -->
+    <string name="one_second">1000</string>
+    <string name="start">0</string>
+    <string name="default_skip_time">10</string>
+    <string name="zero">0</string>
+
+    <string name="play">A</string>
+    <string name="pause">B</string>
+    <string name="stop">C</string>
+    <string name="skip_forward">D</string>
+    <string name="skip_backward">E</string>
+
+    <string name="instruction">instruction</string>
+
 </resources>

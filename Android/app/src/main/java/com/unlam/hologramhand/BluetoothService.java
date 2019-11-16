@@ -119,17 +119,18 @@ public class BluetoothService extends Thread {
                 {
                     //voy concatenando el msj
                     String readMessage = (String) msg.obj;
-                    recDataString.append(readMessage);
-                    int endOfLineIndex = recDataString.indexOf("\r\n");
+                    recDataString = new StringBuilder(); //TODO: eliminar
+                    //recDataString.append(readMessage);
+                    //int endOfLineIndex = recDataString.indexOf("\r\n");
 
                     //cuando recibo toda una linea la muestro en el layout
-                    if (endOfLineIndex > 0)
+                    if (readMessage.length() > 0)
                     {
-                        String instruction = recDataString.substring(0, endOfLineIndex);
-                        System.out.println("---->" + instruction);
+                        //String instruction = recDataString.substring(0, endOfLineIndex);
+                        //System.out.println("---->" + instruction);
 
                         Intent intent = new Intent("gesture-instruction");
-                        intent.putExtra("instruction", instruction);
+                        intent.putExtra("instruction", readMessage);
                         localBroadcastManager.sendBroadcast(intent);
 
                         recDataString.delete(0, recDataString.length());
