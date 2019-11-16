@@ -40,6 +40,9 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     private void selectInstruction(String instruction) {
+        if(this.videoPlayer.isAlertOpen()){
+            return;
+        }
         if(instruction.equals(this.play)){
             this.performPlay();
         }else if(instruction.equals(this.pause)){

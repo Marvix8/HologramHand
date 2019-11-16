@@ -44,7 +44,11 @@
     <string name="conected">conectado </string>
     <string name="fail_device">fallo dispositivo </string>
 
+    <string name="alert_dialog_message">Ubique el celuar con la pantalla hacia arriba sobre una mesa y apague las luces</string>
+    <string name="alert_dialog_title">ALERTA</string>
+    <string name="accept_alert_dialog">Aceptar</string>
 
-
-
+    <!-- Message Receiver-->
+    <string name="environment_light">0.0</string>
+    <string name="accelerometer_z_axis_gravity">9.5</string>
 </resources>

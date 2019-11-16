@@ -1,7 +1,13 @@
 package com.unlam.hologramhand;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
-import android.content.res.Resources;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -10,8 +16,12 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class VideoPlayer extends AppCompatActivity {
+public class VideoPlayer extends AppCompatActivity implements SensorEventListener {
 
+    private SensorManager sensorManager;
+    private Sensor light;
+    private Sensor accelerometer;
+    private boolean alertDialogOpen = false;
     private VideoView videoView;
     private MessageReceiver mMessageReceiver;
     private String resourceBaseURI;
@@ -35,6 +45,8 @@ public class VideoPlayer extends AppCompatActivity {
         videoView.requestFocus();
         videoView.start();
 
+        this.initializeSensors();
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(this.gestureInstruction));
     }
 
@@ -44,8 +56,50 @@ public class VideoPlayer extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    public final void onSensorChanged(SensorEvent event) {
+        switch (event.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                if (exceedMinimunZAxis(event.values[SensorManager.DATA_Z]) && !this.alertDialogOpen) {
+                    this.openAlertDialog();
+                }
+                break;
+            case Sensor.TYPE_LIGHT:
+                if (isBright(event.values[Integer.valueOf(R.string.zero)]) && !this.alertDialogOpen) {
+                    this.openAlertDialog();
+                }
+                break;
+        }
+    }
+
+    private boolean isBright(float value) {
+        return value != Float.valueOf(R.string.environment_light);
+    }
+
+    private boolean exceedMinimunZAxis(float value) {
+        return value <= Float.valueOf(R.string.accelerometer_z_axis_gravity);
+    }
+
+    private void initializeSensors() {
+        this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        this.light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        this.accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        this.sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
+        this.sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
     public VideoView getVideoView() {
         return videoView;
+    }
+
+    public boolean isAlertOpen() {
+        return this.alertDialogOpen;
     }
 
     private void initializeVariables() {
@@ -56,5 +110,21 @@ public class VideoPlayer extends AppCompatActivity {
 
     private String getURIVideo() {
         return this.resourceBaseURI + getPackageName() + this.slash + R.raw.holograma;
+    }
+
+    private void openAlertDialog() {
+        this.alertDialogOpen = true;
+        this.videoView.pause();
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_dialog_message).setTitle(R.string.alert_dialog_title);
+        builder.setPositiveButton(R.string.accept_alert_dialog, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                VideoPlayer.this.alertDialogOpen = false;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

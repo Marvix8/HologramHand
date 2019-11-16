@@ -11,5 +11,6 @@ public class AboutUs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);// activa el boton <-
+
     }
 }
