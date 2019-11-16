@@ -94,6 +94,10 @@ class Gesture {
 			}
 		}
 		
+		int getAction() {
+			return this->action;
+		}
+		
 		int getGesture() {
 			return this->action;
 		}

@@ -65,11 +65,38 @@ class Hand {
 			this->aux = -1;
 		}
 
-		void process(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
+		void processPosition(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
 			updateFingers(bigFingerSensor, indexFingerSensor, middleFingerSensor);
-			processPosition();
+			if (bigFinger->getFlexPosition() == (int) STRAIGHT_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX){
+					this->handPosition = (int)STAR;
+					return;
+				}
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
+					this->handPosition = (int)GOOD;
+					return;
+				}
+			} else if (bigFinger->getFlexPosition() == (int) BEND_FLEX) {
+				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
+					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX) {
+					this->handPosition = (int)SCISSORS;
+					return;
+				}
+					
+				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
+					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
+					this->handPosition = (int)ROCK;
+					return;
+				}
+			}
+			
+			this->handPosition = (int)UNDEFINED;
+		}
+
+		void process() {
 			processSpacePosition();
-			spacePosition = (int)X_PLUS;
 			switch(spacePosition) {
 				case (int)X_PLUS:
 					if (handPosition == (int)GOOD ) {
@@ -181,35 +208,6 @@ class Hand {
 			middleFinger->processInformation(middleFingerSensor);
 		}
 	
-		void processPosition() {
-			if (bigFinger->getFlexPosition() == (int) STRAIGHT_FLEX) {
-				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX){
-					this->handPosition = (int)STAR;
-					return;
-				}
-				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
-					this->handPosition = (int)GOOD;
-					return;
-				}
-			} else if (bigFinger->getFlexPosition() == (int) BEND_FLEX) {
-				if (indexFinger->getFlexPosition() == (int) STRAIGHT_FLEX
-					&& middleFinger->getFlexPosition()  == (int) STRAIGHT_FLEX) {
-					this->handPosition = (int)SCISSORS;
-					return;
-				}
-					
-				else if (indexFinger->getFlexPosition() == (int) BEND_FLEX
-					&& middleFinger->getFlexPosition()  == (int) BEND_FLEX) {
-					this->handPosition = (int)ROCK;
-					return;
-				}
-			}
-			
-			this->handPosition = (int)UNDEFINED;
-		}
-
 		void processSpacePosition() {
 			if (this->acelerometer->getAxisX() >= 0.8 &&
 				this->acelerometer->getAxisX() <= 1.3) {
@@ -224,13 +222,14 @@ class Hand {
 				spacePosition = (int)Z_PLUS;
 				return;				
 			} else if (this->acelerometer->getAxisY() <= -0.8 &&
-				this->acelerometer->getAxisY() <= 1.3) {
+				this->acelerometer->getAxisY() >= -1.3) {
 				spacePosition = (int)Z_LESS;
 				return;				
 			}
 			
 			this->spacePosition = (int)UNDEFINED;
 		}
+	
 };
 
 #endif

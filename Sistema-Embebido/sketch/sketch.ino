@@ -58,7 +58,7 @@ unsigned long previousMillis = 0; // millis() returns an unsigned long.
 int mensajeBluetooth;
 
 // Declarar objeto de comunicación bluetooth.
-//SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
+SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 
 // Declarar objetos de sensores
 Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX_PULGAR);
@@ -71,7 +71,20 @@ Acelerometer acelerometer;
 Hand hand(bigFinger, indexFinger, middleFinger, acelerometer);
 Gesture gesture(hand);
 
+// variables para verificar posición de mano
+int previousPosition = -1;
+int actualPosition = -1;
+int counterSamePosition = 0;
 
+// auxiliares para lectura de sensor flex
+double fatFingerFlex;
+double indexFingerFlex;
+double middleFingerFlex;
+
+// auxiliares para kalman
+double filteredMeasurementX;
+double filteredMeasurementY;
+double filteredMeasurementZ;
 
 // Kalman para acelerometro
 Kalman acelerometerXK(0.7, 15, 1023, 0);
@@ -91,13 +104,23 @@ void setup()
   pinMode(FLEX_SENSOR_PULGAR, INPUT);
   pinMode(FLEX_SENSOR_INDICE, INPUT);
   pinMode(FLEX_SENSOR_MEDIO, INPUT);
-  //pinMode(BLUE_LED, OUTPUT);
-  /*pinMode(RGB_LED_RED, OUTPUT);
+  /*pinMode(BLUE_LED, OUTPUT);
+  pinMode(RGB_LED_RED, OUTPUT);
   pinMode(RGB_LED_BLUE, OUTPUT);
   pinMode(RGB_LED_GREEN, OUTPUT);*/
 
   //bluetooth.begin(9600); // Inicializa comunicación bluetooth.
   Serial.begin(9600); // Inicializa comunicación en serie.
+
+  Wire.write("begin");
+  IMU.begin();
+  IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
+  // setting the accelerometer full scale range to +/-8G 
+  IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
+  // setting DLPF bandwidth to 20 Hz
+  IMU.setDlpfBandwidth(MPU9250::DLPF_BANDWIDTH_20HZ);
+  // setting SRD to 19 for a 50 Hz update rate
+  IMU.setSrd(19);
 }
 
 /*
@@ -105,75 +128,58 @@ void setup()
 */
 void loop()
 {
-  // Obtener tiempo actual
-  unsigned long currentMillis = millis();
+  if(bluetooth.available()){
 
-  if (hand.getCalibrated() == false){
-      // calibro dedos
-      hand.calibrateStraightHand((double)STRAIGHT_RESISTANCE_FLEX_PULGAR, (double)STRAIGHT_RESISTANCE_FLEX_INDICE,(double)STRAIGHT_RESISTANCE_FLEX_MEDIO); 
-      hand.calibrateStraightHand((double)BEND_RESISTANCE_FLEX_PULGAR, (double)BEND_RESISTANCE_FLEX_INDICE,(double)BEND_RESISTANCE_FLEX_MEDIO); 
-      hand.setCalibrated();;
-  }
+    if(bluetooth.read() == "A") {
+      hand.calibrateStraightHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));  
+    }
 
-  // Si interval es menor a la diferencia de currentMillis y previousMillis tomo las mediciones de los sensores.
-  if ((unsigned long)(currentMillis - previousMillis) >= interval)
-  {
-    /*if(bluetooth.available())
-    {
-      digitalWrite(BLUE_LED, HIGH);*/
-      // llamar a hand
-      hand.process((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
-
-      //int test = hand.getHandPosition();
-
-      Serial.println("P");
-      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
-      //Serial.println(bigFinger.processInformation((double)analogRead(FLEX_SENSOR_PULGAR)));
-      Serial.println(bigFinger.getActualValue());
-      /*Serial.println(hand.getAux());
-      Serial.println(bigFinger.getActualValue());
-      Serial.println(bigFinger.getAngle());*/
-      
-      Serial.println("\n");
-          
-/*
-      Serial.println("I");
-      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
-      Serial.println(indexFinger.getActualValue());
-      Serial.println(indexFinger.getAngle());
-      Serial.println("\n");
-
-      Serial.println("M");
-      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.println(middleFinger.getActualValue());
-      Serial.println(middleFinger.getAngle());
-      Serial.println("\n");*/
-      /*
-      Serial.println("EVALUO");
-      if (test == 0){
-        Serial.println("STAR");
-      } else if (test == 1) {
-        Serial.println("SCISSORS");
-      } else if (test == 2) {
-        Serial.println("GOOD");
-      } else if (test == 3) {
-        Serial.println("ROCK");
-      }*/
-      
-      
-      // llamar a gesture --> si tuviera unooooooo!!!
-  
-      // Actualizo previousMillis para que vuelva a ingresar en próximas iteraciones.
+    if(bluetooth.read() == "B") {
+      hand.calibrateBendHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
+      hand.setCalibrated();
+    }
     
-      previousMillis = millis();
-  }
+    if(hand.getCalibrated() == true) {
+      fatFingerFlex = (double)analogRead(FLEX_SENSOR_PULGAR);
+      indexFingerFlex = (double)analogRead(FLEX_SENSOR_INDICE);
+      middleFingerFlex = (double)analogRead(FLEX_SENSOR_MEDIO);
 
-  /*
-    // Ejemplo de invocación a Kalman.. nos va a servir para el acelerómetro.
-    filteredMeasurement = myFilter.getFilteredValue(measurement);
-    Serial.println("KalmanFilter: " + String(filteredMeasurement) + " kalmanValue");
-    Serial.println();
-  */
+      hand.processPosition(fatFingerFlex, indexFingerFlex, middleFingerFlex);
+      
+      if (previousPosition == -1){
+        previousPosition = hand.getHandPosition();
+      } else {
+        actualPosition = hand.getHandPosition();
+      }
+      
+      if (actualPosition == previousPosition ){
+        counterSamePosition++;
+      } else {
+        actualPosition = hand.getHandPosition();
+        previousPosition = actualPosition;
+        counterSamePosition = 0;
+      }
+      
+      IMU.readSensor();
+      filteredMeasurementX = acelerometerXK.getFilteredValue(IMU.getAccelX_mss() * 0.1);
+      filteredMeasurementY = acelerometerYK.getFilteredValue(IMU.getAccelY_mss() * 0.1);
+      filteredMeasurementZ = acelerometerZK.getFilteredValue(IMU.getAccelZ_mss() * 0.1);
+      
+      if(counterSamePosition == 20) {
+        acelerometer.setAxisValues(filteredMeasurementX, filteredMeasurementY, filteredMeasurementZ);
+        
+        hand.process();
+        gesture.readInput();
+        gesture.updateStateMachine();
+
+        if(gesture.getAction() != -1 && gesture.getHasChanged() == true) {
+          bluetooth.write(gesture.getAction());
+        }       
+        
+        counterSamePosition = 0;
+      }
+    }
+  }
 }
 
 
