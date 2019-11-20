@@ -65,4 +65,5 @@
     <string name="axis_y">1</string>;
     <string name="axis_z">2</string>;
 
+    <string name="configuration">Configuración</string>
 </resources>
