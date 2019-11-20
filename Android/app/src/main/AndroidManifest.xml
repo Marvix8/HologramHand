@@ -12,12 +12,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".VideoPlayer"></activity>
+        android:theme="@style/MainTheme">
+        <activity android:name=".ConfigureActivity" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".VideoPlayer"  />
         <activity android:name=".ImageSlideshow" />
         <activity
             android:name=".AboutUs"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity" android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

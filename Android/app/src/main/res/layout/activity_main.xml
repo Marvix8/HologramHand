@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/bluetoothTopGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+            <!-- "Mark Favorite", should appear as action button if possible -->
+            <item
+                android:id="@+id/action_favorite"
+                android:icon="@drawable/ic_favorite_black_48dp"
+                android:title="@string/action_favorite"
+                app:showAsAction="ifRoom"/>
+
+            <!-- Settings, should always be in the overflow -->
+            <item android:id="@+id/action_settings"
+                android:title="@string/action_settings"
+                app:showAsAction="never"/>
+
+        </menu>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
     <ImageButton
         android:id="@+id/mainMenuButton"
         android:layout_width="0dp"
@@ -36,28 +66,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0" />
+        app:layout_constraintGuide_percent="0.075" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bluetoothBottomGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.075" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/mainButtonTopGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/mainButtonBottomGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/aboutUsBottomGuideline"
@@ -139,13 +169,13 @@
 
     <ListView
         android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/mainButtonTopGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/leftGuideline"
         app:layout_constraintTop_toTopOf="@+id/bluetoothBottomGuideline"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_height="0dp"
-        android:layout_width="0dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/searchDevices"
@@ -156,7 +186,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bluetoothBottomGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/bluetoothSwitchGuideline"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
         app:srcCompat="@drawable/ic_search_black_24dp" />
 
 
