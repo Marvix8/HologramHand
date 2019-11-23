@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 public class BluetoothService extends Thread {
+    private static BluetoothService bluetoothService;
 
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private final Context context;
@@ -34,7 +35,7 @@ public class BluetoothService extends Thread {
     private Handler handlerBluetoothIn;
     private int handlerState = 0;
 
-    public BluetoothService(Context context, String deviceAddress, final String item) {
+    private BluetoothService(Context context, String deviceAddress, final String item) {
 
         this.context = context;
 
@@ -72,7 +73,22 @@ public class BluetoothService extends Thread {
 
         this.mmInStream = tmpIn;
         this.mmOutStream = tmpOut;
-        this.recDataString  = new StringBuilder();
+        this.recDataString = new StringBuilder();
+    }
+
+    public static BluetoothService create(Context context, String deviceAddress, final String item) {
+        if (bluetoothService == null) {
+            bluetoothService = new BluetoothService(context, deviceAddress, item);
+        }
+        return bluetoothService;
+    }
+
+    public static void destroyBluetooth() {
+        bluetoothService = null;
+    }
+
+    public static BluetoothService create() {
+        return bluetoothService;
     }
 
     public void setHandler(Handler handlerBluetoothIn) {
@@ -80,8 +96,7 @@ public class BluetoothService extends Thread {
     }
 
     //metodo run del hilo, que va a entrar en una espunregisterReceiverera activa para recibir los msjs del HC05
-    public void run()
-    {
+    public void run() {
         final int bufferSize = 256;
         final int zero = 0;
 
@@ -89,10 +104,8 @@ public class BluetoothService extends Thread {
         int bytes;
 
         //el hilo secundario se queda esperando mensajes del HC05
-        while (true)
-        {
-            try
-            {
+        while (true) {
+            try {
                 //se leen los datos del Bluethoot
                 bytes = this.mmInStream.read(buffer);
                 String readMessage = new String(buffer, zero, bytes);
@@ -119,17 +132,14 @@ public class BluetoothService extends Thread {
     }
 
     //Handler que sirve que permite mostrar datos en el Layout al hilo secundario
-    public Handler HandlerMensajeHiloPrincipal(final Context mainContext)
-    {
+    public Handler HandlerMensajeHiloPrincipal(final Context mainContext) {
         final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mainContext);
 
         return new Handler() {
 
-            public void handleMessage(android.os.Message msg)
-            {
+            public void handleMessage(android.os.Message msg) {
                 //si se recibio un msj del hilo secundario
-                if (msg.what == handlerState)
-                {
+                if (msg.what == handlerState) {
                     //voy concatenando el msj
                     String readMessage = (String) msg.obj;
                     recDataString = new StringBuilder(); //TODO: eliminar
@@ -137,8 +147,7 @@ public class BluetoothService extends Thread {
                     //int endOfLineIndex = recDataString.indexOf("\r\n");
 
                     //cuando recibo toda una linea la muestro en el layout
-                    if (readMessage.length() > Integer.valueOf(mainContext.getString(R.string.zero)))
-                    {
+                    if (readMessage.length() > Integer.valueOf(mainContext.getString(R.string.zero))) {
                         Intent intent = new Intent(mainContext.getString(R.string.gesture_instruction));
                         intent.putExtra(mainContext.getString(R.string.instruction), readMessage);
                         localBroadcastManager.sendBroadcast(intent);
