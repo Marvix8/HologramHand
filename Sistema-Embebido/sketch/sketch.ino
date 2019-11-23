@@ -6,17 +6,11 @@
 #include <SoftwareSerial.h>    // para la comunicación bluetooth
 
 /*
-   Utilizadas para marcar el intervalo de lectura de medición de los sensores.
-*/
-unsigned long interval = 4000; // the time we need to wait
-unsigned long previousMillis = 0; // millis() returns an unsigned long.
-
-/*
    Asignación de sensores a los distintos pines del arduino.
 */
 #define FLEX_SENSOR_PULGAR  A1
-#define FLEX_SENSOR_INDICE  A2
-#define FLEX_SENSOR_MEDIO   A0
+#define FLEX_SENSOR_INDICE  A0
+#define FLEX_SENSOR_MEDIO   A2
 #define BLUETOOTH_RX        7
 #define BLUETOOTH_TX        8
 #define BLUE_LED            2
@@ -35,26 +29,7 @@ unsigned long previousMillis = 0; // millis() returns an unsigned long.
 #define CALIBRATE_STRAIGHT_HAND 65
 #define CALIBRATE_BEND_HAND 66
 
-/*
-   Valor de las resistencias de cada sensor flex.
-   @BEND_RESISTANCE es la medición con el flex cerrado.
-   @STRAIGHT_RESISTANCE es la medicón con el flex completmente abierto.
-   @DIVISOR_RESISTANCE es la medición de la resistencia fija del divisor de tensión.
-*/
-
-// falta sacar medicion de este
-#define STRAIGHT_RESISTANCE_FLEX_PULGAR  750.0 // resistance when straight
-#define BEND_RESISTANCE_FLEX_PULGAR      662.0 // resistance at 90 deg
-#define DIVISOR_RESISTANCE_FLEX_PULGAR   98.0 // Measured resistance of 3.3k resistor
-
-// falta sacar medicion de este
-#define STRAIGHT_RESISTANCE_FLEX_INDICE  750.0 // resistance when straight
-#define BEND_RESISTANCE_FLEX_INDICE      520.0 // resistance at 90 deg
-#define DIVISOR_RESISTANCE_FLEX_INDICE   98.0 // Measured resistance of 3.3k resistor
-
-#define STRAIGHT_RESISTANCE_FLEX_MEDIO  775.0 // resistance when straight
-#define BEND_RESISTANCE_FLEX_MEDIO      504.0 // resistance at 90 deg
-#define DIVISOR_RESISTANCE_FLEX_MEDIO   98.0 // Measured resistance of 3.3k resistor
+#define DIVISOR_RESISTANCE_FLEX 100
 
 // Valor a enviar vía bluetooth.
 int mensajeBluetooth;
@@ -63,9 +38,9 @@ int mensajeBluetooth;
 SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 
 // Declarar objetos de sensores
-Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX_PULGAR);
-Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX_INDICE);
-Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX_MEDIO);
+Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX);
+Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX);
+Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX);
 // Objeto de acelerómetros
 MPU9250 IMU(Wire,0x68);
 Acelerometer acelerometer;
@@ -79,7 +54,7 @@ int actualPosition = -1;
 int counterSamePosition = 0;
 
 // auxiliares para lectura de sensor flex
-double fatFingerFlex;
+double bigFingerFlex;
 double indexFingerFlex;
 double middleFingerFlex;
 
@@ -119,12 +94,7 @@ void setup()
   Wire.write("begin");
   IMU.begin();
   IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
-  // setting the accelerometer full scale range to +/-8G 
-  IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
-  // setting DLPF bandwidth to 20 Hz
-  IMU.setDlpfBandwidth(MPU9250::DLPF_BANDWIDTH_20HZ);
-  // setting SRD to 19 for a 50 Hz update rate
-  IMU.setSrd(19);
+
   Serial.println("Setup OK");
 }
 
@@ -138,40 +108,48 @@ void loop()
   //if(bluetooth.available()){
     bluetoothReader = Serial.read();
     //bluetoothReader = bluetooth.read();
-    if(bluetoothReader == CALIBRATE_STRAIGHT_HAND){
-      Serial.println("recibi A");
-      hand.calibrateStraightHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.println("StraightCal");
-    }
 
     //if(bluetooth.read() == CALIBRATE_BEND_HAND) {
     if(bluetoothReader == CALIBRATE_BEND_HAND) {
       Serial.println("recibi B");
       hand.calibrateBendHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
-      hand.setCalibrated();
+      Serial.print("P: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
+      Serial.print("I: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
+      Serial.print("M: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
       Serial.println("BendCal");
+    }
+    
+    if(bluetoothReader == CALIBRATE_STRAIGHT_HAND){
+      Serial.println("recibi A");
+      hand.calibrateStraightHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
+      hand.setCalibrated();
+      Serial.print("P: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
+      Serial.print("I: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
+      Serial.print("M: ");
+      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
+      Serial.println("StraightCal");
       Serial.println("Calibrated");
     }
     
     if(hand.getCalibrated() == true) {
-      Serial.print("Counter: ");
-      Serial.println(counterSamePosition);
-      fatFingerFlex = (double)analogRead(FLEX_SENSOR_PULGAR);
+      /*Serial.print("Counter: ");
+      Serial.println(counterSamePosition);*/
+      bigFingerFlex = (double)analogRead(FLEX_SENSOR_PULGAR);
       indexFingerFlex = (double)analogRead(FLEX_SENSOR_INDICE);
       middleFingerFlex = (double)analogRead(FLEX_SENSOR_MEDIO);
 
-      hand.processPosition(fatFingerFlex, indexFingerFlex, middleFingerFlex);
+      hand.processPosition(bigFingerFlex, indexFingerFlex, middleFingerFlex);
       
       if (previousPosition == -1){
         previousPosition = hand.getHandPosition();
       } 
       actualPosition = hand.getHandPosition();
-
       
-      Serial.print("straight: ");
-      Serial.println(middleFinger.getStraightResistance());
-      Serial.print("bend: ");
-      Serial.println(middleFinger.getBendResistance());
       if (actualPosition == previousPosition){
         counterSamePosition++;
       } else {
@@ -184,15 +162,68 @@ void loop()
       filteredMeasurementY = acelerometerYK.getFilteredValue(IMU.getAccelY_mss() * 0.1);
       filteredMeasurementZ = acelerometerZK.getFilteredValue(IMU.getAccelZ_mss() * 0.1);
       
-      if(counterSamePosition == 5) {
+      if(counterSamePosition == 1500) {
         acelerometer.setAxisValues(filteredMeasurementX, filteredMeasurementY, filteredMeasurementZ);
         
         hand.process();
         gesture.readInput();
         gesture.updateStateMachine();
 
+        Serial.print("P: ");
+        Serial.print(bigFinger.getFlexPosition());
+        Serial.print("\t");
+        Serial.println(bigFingerFlex);
+        Serial.print("I: ");
+        Serial.print(indexFinger.getFlexPosition());
+        Serial.print("\t");
+        Serial.println(indexFingerFlex);
+        Serial.print("M: ");
+        Serial.print(middleFinger.getFlexPosition());
+        Serial.print("\t");
+        Serial.println(middleFingerFlex);
+        
+        switch(hand.getMovement()){
+            case (int)SPZ:
+              Serial.println("Star +Z");
+              break;
+            case (int)SNZ:
+              Serial.println("Star -Z");
+              break;
+            case (int)SPY:
+              Serial.println("Star +Y");
+              break;
+            case (int)SPX:
+              Serial.println("Star +X");
+              break;
+            case (int)RPY:
+              Serial.println("Rock +Y");
+              break;
+            case (int)RPZ:
+              Serial.println("Rock +Z");
+              break;
+            case (int)GNZ:
+              Serial.println("Good -Z");
+              break;
+            case (int)GPZ:
+              Serial.println("Good +Z");
+              break;
+            case (int)GPX:
+              Serial.println("Good +X");
+              break;
+            case (int)SCPY:
+              Serial.println("Scissors +Y");
+              break;
+            case (int)SCNZ:
+              Serial.println("Scissors -Z");
+              break;
+            case (int)UNDEFINED:
+              Serial.println("Undefined");
+              break;
+          }
+
         if(gesture.getAction() != -1 && gesture.getHasChanged() == true) {
           //bluetooth.write(gesture.getAction());
+        
           Serial.println("Acción a enviar: ");
           switch (gesture.getAction()){
             case (int)PLAY_PAUSE:
@@ -213,27 +244,14 @@ void loop()
             case (int)SPEED_X05:
               Serial.println("SPEED_X05");
               break;
+            }
           }
-        }       
         gesture.setHasChanged(false);
         counterSamePosition = 0;
       }
     }
-
-    fatFingerFlex = (double)analogRead(FLEX_SENSOR_PULGAR);
-    indexFingerFlex = (double)analogRead(FLEX_SENSOR_INDICE);
-    middleFingerFlex = (double)analogRead(FLEX_SENSOR_MEDIO);
-
-    Serial.print("PULGAR: ");
-    Serial.println(fatFingerFlex);
-    Serial.print("INDICE: ");
-    Serial.println(indexFingerFlex);
-    Serial.print("MEDIO: ");
-    Serial.println(middleFingerFlex);
-    
-    delay(2000);
-  //}
 }
+
 
 
 /*

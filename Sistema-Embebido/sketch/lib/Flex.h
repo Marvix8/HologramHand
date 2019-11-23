@@ -10,10 +10,8 @@ class Flex {
 		double straightResistance; 	// Resistencia del flex estirado.
 		double bendResistance;		// Resistencia del flex flexionado.
 		double divisorResistance;	// Resistencia del divisor de tensión.
-		double flexVoltaje;				// Voltaje que recibe el flex.
 		int flexPosition;			// Posición en la que se encuentra el dedo.
-		double actualValue;
-		double angleV;
+		double difference;
 	
 	public:
 		// Constructor genérico.
@@ -28,10 +26,8 @@ class Flex {
 			this->straightResistance = -1;
 			this->bendResistance = -1;
 			this->divisorResistance = divisorResistance;
-			this->flexVoltaje = -1;
 			int flexPosition = -1;
-			this->actualValue = -1;
-			this->angleV = -1;
+			this->difference = -1;
 		}
 		
 		/*
@@ -40,10 +36,8 @@ class Flex {
 		* 	@sensorValue: valor leído del sensor flex.
 		*	@voltajeReceived: voltaje que recibe el sensor flex.
 		*/
-		double processInformation(double sensorValue) {
-			this->actualValue = sensorValue;
-			flexPositionCalculator (angleCalculator(sensorValue));
-			return sensorValue;
+		void processInformation(double sensorValue) {
+			flexPositionCalculator(sensorValue);
 		}
 		
 		/*
@@ -56,6 +50,10 @@ class Flex {
 		
 		void setBendResistance(double bendResistance) {
 			this->bendResistance = bendResistance;
+		}
+		
+		void setDifference(double difference) {
+			this->difference = difference;
 		}
 		
 		void setDivisorResistance(double divisorResistance) {
@@ -78,32 +76,16 @@ class Flex {
 			return this->flexPosition;
 		}
 		
-		double getAngle() {
-			return this->angleV;
-		}
-		
-		double getActualValue() {
-			return this->actualValue;
-		}
-		
 	private:
-		double angleCalculator(double sensorValue) {
-			double flexResistance;
-			
-			this->flexVoltaje = (sensorValue) * (double)VOLTAJE_RECEIVED / 1023.0;
-			flexResistance = this->divisorResistance * ((double)VOLTAJE_RECEIVED / this->flexVoltaje - 1.0);
-
-			// Uso la resistencia calculada para estimar el angulo de inclinación del sensor
-			double angle = map(flexResistance, this->straightResistance, this->bendResistance, 0, 90.0);
-			
-			
-			this->angleV = angle;
-			
-			return angle;
-		}
+		void flexPositionCalculator (double flexValue){
+			int aux = this->straightResistance - flexValue;
 		
-		void flexPositionCalculator (double flexAngle){
-			if (flexAngle <= 45.0){
+			if (aux < 0) {
+				this->flexPosition = (int)STRAIGHT_FLEX;
+				return;
+			}
+			
+			if (aux >= this->difference * 0.7) {
 				this->flexPosition = (int)BEND_FLEX;
 				return;
 			}

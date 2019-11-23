@@ -122,7 +122,9 @@ class Hand {
 						case (int)UNDEFINED:
 							this->movement = (int)UNDEFINED;
 							break;
-						default: break;
+						default: 
+							this->movement = (int)UNDEFINED;
+							break;
 					}
 					break;
 
@@ -140,7 +142,9 @@ class Hand {
 						case (int)UNDEFINED:
 							this->movement = (int)UNDEFINED;
 							break;
-						default: break;
+						default: 
+							this->movement = (int)UNDEFINED;
+							break;
 					}
 					break;
 
@@ -158,7 +162,9 @@ class Hand {
 						case (int)UNDEFINED:
 							this->movement = (int)UNDEFINED;
 							break;
-						default: break;
+						default: 
+							this->movement = (int)UNDEFINED;
+							break;
 					}
 					break;
 				
@@ -190,15 +196,18 @@ class Hand {
 		}
 		
 		void calibrateStraightHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger->setStraightResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
-			indexFinger->setStraightResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
-			middleFinger->setStraightResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
+			bigFinger->setStraightResistance(bigFingerSensorValue);
+			bigFinger->setDifference(bigFinger->getStraightResistance() - bigFinger->getBendResistance());
+			indexFinger->setStraightResistance(indexFingerSensorValue);
+			indexFinger->setDifference(indexFinger->getStraightResistance() - indexFinger->getBendResistance());
+			middleFinger->setStraightResistance(middleFingerSensorValue);
+			middleFinger->setDifference(middleFinger->getStraightResistance() - middleFinger->getBendResistance());
 		}
 		
 		void calibrateBendHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {
-			bigFinger->setBendResistance(bigFingerSensorValue - bigFinger->getDivisorResistance());
-			indexFinger->setBendResistance(indexFingerSensorValue - indexFinger->getDivisorResistance());
-			middleFinger->setBendResistance(middleFingerSensorValue - middleFinger->getDivisorResistance());
+			bigFinger->setBendResistance(bigFingerSensorValue);
+			indexFinger->setBendResistance(indexFingerSensorValue);
+			middleFinger->setBendResistance(middleFingerSensorValue);
 		}
 		
 	private:
@@ -221,8 +230,8 @@ class Hand {
 				this->acelerometer->getAxisZ() <= 1.3) {
 				spacePosition = (int)Z_PLUS;
 				return;				
-			} else if (this->acelerometer->getAxisY() <= -0.8 &&
-				this->acelerometer->getAxisY() >= -1.3) {
+			} else if (this->acelerometer->getAxisZ() <= -0.8 &&
+				this->acelerometer->getAxisZ() >= -1.3) {
 				spacePosition = (int)Z_LESS;
 				return;				
 			}
