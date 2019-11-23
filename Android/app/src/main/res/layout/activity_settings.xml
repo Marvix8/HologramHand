@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_text"
-        app:layout_constraintStart_toStartOf="@+id/first_vertical_guideline"
-        app:layout_constraintTop_toTopOf="@+id/first_horizontal_guideline" />
+<!--    <SeekBar-->
+<!--        android:id="@+id/seekBar"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_text"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/first_vertical_guideline"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/first_horizontal_guideline" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/first_vertical_guideline"
@@ -28,12 +28,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".95" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_guideline_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".80" />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/vertical_guideline_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.8" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/first_horizontal_guideline"
@@ -43,18 +43,36 @@
         app:layout_constraintGuide_percent=".05" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/configuration_button_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".15" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/last_horizontal_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".95" />
 
-    <TextView
-        android:id="@+id/percentage_bright"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/calibrar_guante"
+        android:onClick="openCalibrationHand"
+        app:layout_constraintBottom_toTopOf="@+id/configuration_button_guideline2"
         app:layout_constraintEnd_toStartOf="@+id/last_vertical_guideline"
-        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_text"
+        app:layout_constraintStart_toStartOf="@+id/first_vertical_guideline"
         app:layout_constraintTop_toTopOf="@+id/first_horizontal_guideline" />
+
+    <!--    <TextView-->
+<!--        android:id="@+id/percentage_bright"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/last_vertical_guideline"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_text"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/first_horizontal_guideline" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

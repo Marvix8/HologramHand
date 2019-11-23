@@ -23,6 +23,7 @@
 
     <!-- MessageReceiver -->
     <string name="one_second">1000</string>
+    <string name="two_seconds">2</string>
     <string name="start">0</string>
     <string name="default_skip_time">10</string>
     <string name="zero">0</string>
@@ -66,4 +67,10 @@
     <string name="axis_z">2</string>;
 
     <string name="configuration">Configuración</string>
+    <string name="calibrar_guante">Calibrar Guante</string>
+    <string name="start_configuration">INICIAR</string>
+    <string name="first_configuration_message">Mantenga la mano bien cerrada y presione INICIAR</string>
+    <string name="second_configuration_message">Mantenga la mano bien estirada y presione INICIAR</string>
+    <string name="configuration_done_message">Calibración completada correctamente. Presione FINALIZAR</string>
+    <string name="finish_configuration">FINALIZAR</string>
 </resources>
