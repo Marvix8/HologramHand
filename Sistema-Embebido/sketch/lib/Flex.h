@@ -90,7 +90,7 @@ class Flex {
 		double angleCalculator(double sensorValue) {
 			double flexResistance;
 			
-			this->flexVoltaje = (sensorValue - this->divisorResistance) * (double)VOLTAJE_RECEIVED / 1023.0;
+			this->flexVoltaje = (sensorValue) * (double)VOLTAJE_RECEIVED / 1023.0;
 			flexResistance = this->divisorResistance * ((double)VOLTAJE_RECEIVED / this->flexVoltaje - 1.0);
 
 			// Uso la resistencia calculada para estimar el angulo de inclinación del sensor

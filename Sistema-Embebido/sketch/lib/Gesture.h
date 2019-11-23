@@ -106,10 +106,10 @@ class Gesture {
 			return this->hasChanged;
 		}
 	
-		void getHasChanged(bool hasChanged) {
+		void setHasChanged(bool hasChanged) {
 			this->hasChanged = hasChanged;
 		}
-	
+		
 	private:
 		void changeState(int newState) {
 			currentState = newState;
