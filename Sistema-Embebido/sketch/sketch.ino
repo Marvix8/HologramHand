@@ -26,8 +26,9 @@
 /*
  * Inputs recibidos desde bluetooth
  */
-#define CALIBRATE_STRAIGHT_HAND 65
+#define CALIBRATE_STRAIGHT_HAND 83
 #define CALIBRATE_BEND_HAND 66
+#define TURN_LED 76
 
 #define DIVISOR_RESISTANCE_FLEX 100
 
@@ -38,9 +39,9 @@ int mensajeBluetooth;
 SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 
 // Declarar objetos de sensores
-Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX);
-Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX);
-Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX);
+Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX, 1.0);
+Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX, 0.8);
+Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX, 0.5);
 // Objeto de acelerómetros
 MPU9250 IMU(Wire,0x68);
 Acelerometer acelerometer;
@@ -222,27 +223,26 @@ void loop()
           }
 
         if(gesture.getAction() != -1 && gesture.getHasChanged() == true) {
-          //bluetooth.write(gesture.getAction());
-        
+          //bluetooth.write(gesture.getAction());          
           Serial.println("Acción a enviar: ");
           switch (gesture.getAction()){
-            case (int)PLAY_PAUSE:
-              Serial.println("PLAY_PAUSE");
+            case (int)PLAY:
+              Serial.println("PLAY");
               break;
-            case (int)NEXT:
-              Serial.println("NEXT");
+            case (int)PAUSE:
+              Serial.println("PAUSE");
               break;
-            case (int)PREVIOUS:
-              Serial.println("PREVIOUS");
+            case (int)STOP:
+              Serial.println("STOP");
               break;
-            case (int)SPEED_X1:
-              Serial.println("SPEED_X1");
+            case (int)PLUS_10S:
+              Serial.println("PLUS_10S");
               break;
-            case (int)SPEED_X2:
-              Serial.println("SPEED_X2");
+            case (int)LESS_10S:
+              Serial.println("LESS_10S");
               break;
-            case (int)SPEED_X05:
-              Serial.println("SPEED_X05");
+            case (int)PLUS_20S:
+              Serial.println("PLUS_20S");
               break;
             }
           }

@@ -12,6 +12,7 @@ class Flex {
 		double divisorResistance;	// Resistencia del divisor de tensión.
 		int flexPosition;			// Posición en la que se encuentra el dedo.
 		double difference;
+		double factor;
 	
 	public:
 		// Constructor genérico.
@@ -22,12 +23,13 @@ class Flex {
 		* Entrada:
 		* 	@divisorResistance: resistencia del divisor de tensión.
 		*/
-		Flex(double divisorResistance) {	
+		Flex(double divisorResistance, double factor) {	
 			this->straightResistance = -1;
 			this->bendResistance = -1;
 			this->divisorResistance = divisorResistance;
 			int flexPosition = -1;
 			this->difference = -1;
+			this->factor = factor;
 		}
 		
 		/*
@@ -85,7 +87,7 @@ class Flex {
 				return;
 			}
 			
-			if (aux >= this->difference * 0.7) {
+			if (aux >= this->difference * this->factor) {
 				this->flexPosition = (int)BEND_FLEX;
 				return;
 			}

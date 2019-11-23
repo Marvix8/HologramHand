@@ -100,9 +100,9 @@ class Hand {
 			switch(spacePosition) {
 				case (int)X_PLUS:
 					if (handPosition == (int)GOOD ) {
-						this->movement = (int)GPZ;
+						this->movement = (int)GPX;
 					} else if (handPosition == (int)STAR ) {
-						this->movement = (int)SPZ;
+						this->movement = (int)SPX;
 					} else {
 						this->movement = (int)UNDEFINED;
 					}

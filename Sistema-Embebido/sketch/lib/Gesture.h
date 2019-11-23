@@ -4,12 +4,12 @@
 #include "Hand.h"
 
 // Acciones a realizar en aplicación Android
-#define PLAY_PAUSE          0
-#define NEXT                1
-#define PREVIOUS            2
-#define SPEED_X1            3
-#define SPEED_X2            4
-#define SPEED_X05           5
+#define PLAY          0
+#define PAUSE         1
+#define STOP          2
+#define PLUS_10S      3
+#define LESS_10S      4
+#define PLUS_20S      5 
 
 enum State {
 	StarPZ,
@@ -75,8 +75,7 @@ class Gesture {
 			}
 
 		void readInput() {
-			currentInput = Input::InDefault;
-			
+
 			switch (hand->getMovement()) {
 				case (int)SPZ: currentInput = Input::InStarPZ; break;
 				case (int)SNZ: currentInput = Input::InStarNZ; break;
@@ -90,7 +89,7 @@ class Gesture {
 				case (int)SCPY: currentInput = Input::InScissorPY; break;
 				case (int)SCNZ: currentInput = Input::InScissorNZ; break;
 				case (int)UNDEFINED: currentInput = Input::InDefault; break;
-				default: break;
+				default: currentInput = Input::InDefault; break;
 			}
 		}
 		
@@ -129,95 +128,79 @@ class Gesture {
 		*	STATES
 		*/
 		void stateDefault() {
-			if (currentInput == Input::InStarPZ)
-				changeState(State::StarPZ);
-			if (currentInput == Input::InStarNZ)
-				changeState(State::StarNZ);	
-			if (currentInput == Input::InStarPY)
-				changeState(State::StarPY);	
-			if (currentInput == Input::InStarPX)
-				changeState(State::StarPX);	
-			if (currentInput == Input::InRockPY)
-				changeState(State::RockPY);	
-			if (currentInput == Input::InRockPZ)
-				changeState(State::RockPZ);	
-			if (currentInput == Input::InGoodNZ)
-				changeState(State::GoodNZ);	
-			if (currentInput == Input::InGoodPZ)
-				changeState(State::GoodPZ);	
-			if (currentInput == Input::InGoodPX)
-				changeState(State::GoodPX);	
-			if (currentInput == Input::InScissorPY)
-				changeState(State::ScissorPY);	
-			if (currentInput == Input::InScissorNZ)
-				changeState(State::ScissorNZ);	
+			switch (currentInput) {
+				case Input::InStarPZ: changeState(State::StarPZ); break;
+				case Input::InStarNZ: changeState(State::StarNZ); break;
+				case Input::InStarPY: changeState(State::StarPY); break;
+				case Input::InStarPX: changeState(State::StarPX); break;
+				case Input::InRockPZ: changeState(State::RockPZ); break;
+				default: changeState(State::Default); break;
+			}
 		}
 
 		void stateStarPZ() {
-			if (currentInput == Input::InRockPY)
-				changeState(State::RockPY);
-			if (currentInput == Input::InGoodNZ)
-				changeState(State::GoodNZ);
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			switch(currentInput) {
+				case Input::InRockPY: changeState(State::RockPY); break;
+				case Input::InGoodNZ: changeState(State::GoodNZ); break;
+				case Input::InStarPZ: break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateStarNZ() {
-			if (currentInput == Input::InGoodPZ)
-				changeState(State::GoodPZ);
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			switch(currentInput) {
+				case Input::InGoodPZ: changeState(State::GoodPZ); break;
+				case Input::InStarNZ: break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateStarPY() {
-			if (currentInput == Input::InGoodPX)
-				changeState(State::GoodPX);
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			switch(currentInput) {
+				case Input::InGoodPX: changeState(State::GoodPX); break;
+				case Input::InStarPY: break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateStarPX() {
-			if (currentInput == Input::InScissorPY)
-				changeState(State::ScissorPY);
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			switch(currentInput) {
+				case Input::InScissorPY: changeState(State::ScissorPY); break;
+				case Input::InStarPX: break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateRockPY() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 		
 		void stateRockPZ() {
-			if (currentInput == Input::InScissorNZ)
-				changeState(State::ScissorNZ);
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			switch(currentInput) {
+				case Input::InScissorNZ: changeState(State::ScissorNZ); break;
+				case Input::InRockPZ: break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateGoodNZ() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 		
 		void stateGoodPZ() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 		
 		void stateGoodPX() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 		
 		void stateScissorPY() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 		
 		void stateScissorNZ() {
-			if (currentInput == Input::InDefault)
-				changeState(State::Default);
+			changeState(State::Default);
 		}
 
 		/*
@@ -225,32 +208,32 @@ class Gesture {
 		*/
 		void outputRockPY() {
 			this->hasChanged = true;
-			this->action = (int)PLAY_PAUSE;
+			this->action = (int)STOP;
 		}
 
 		void outputGoodNZ() {
 			this->hasChanged = true;
-			this->action = (int)NEXT;
+			this->action = (int)PLUS_10S;
 		}
 		
 		void outputGoodPZ() {
 			this->hasChanged = true;
-			this->action = (int)PREVIOUS;
+			this->action = (int)LESS_10S;
 		}
 		
 		void outputGoodPX() {
 			this->hasChanged = true;
-			this->action = (int)SPEED_X1;
+			this->action = (int)PLAY;
 		}
 		
 		void outputScissorPY() {
 			this->hasChanged = true;
-			this->action = (int)SPEED_X2;
+			this->action = (int)PLUS_20S;
 		}
 		
 		void outputScissorNZ() {
 			this->hasChanged = true;
-			this->action = (int)SPEED_X05;
+			this->action = (int)PAUSE;
 		}
 
 };
