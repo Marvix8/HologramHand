@@ -310,8 +310,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * tenSeconds;
 
-                if (speed > SHAKE_THRESHOLD) {
-                    this.bluetoothSwitch.performClick();
+                if (speed > SHAKE_THRESHOLD && this.bluetoothService != null) {
+                    this.bluetoothService.write("L");
                 }
                 last_x = x;
                 last_y = y;

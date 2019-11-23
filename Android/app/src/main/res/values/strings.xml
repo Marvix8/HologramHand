@@ -28,11 +28,12 @@
     <string name="default_skip_time">10</string>
     <string name="zero">0</string>
 
-    <string name="play">A</string>
-    <string name="pause">B</string>
-    <string name="stop">C</string>
-    <string name="skip_forward">D</string>
-    <string name="skip_backward">E</string>
+    <string name="play">0</string>
+    <string name="pause">1</string>
+    <string name="stop">2</string>
+    <string name="skip_forward">3</string>
+    <string name="skip_backward">4</string>
+    <string name="skip_super_forward">5</string>
 
     <string name="instruction">instruction</string>
 
@@ -50,8 +51,8 @@
     <string name="accept_alert_dialog">Aceptar</string>
 
     <!-- Message Receiver-->
-    <string name="environment_light">1.0</string>
-    <string name="accelerometer_z_axis_gravity">9.5</string>
+    <string name="environment_light">500.0</string>
+    <string name="accelerometer_z_axis_gravity">10.3</string>
 
     <!-- MainActivity -->
     <string name="shake_update_time">100</string>;

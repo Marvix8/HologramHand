@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -58,7 +59,9 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        this.alertDialog.dismiss();
+        if (this.alertDialog != null) {
+            this.alertDialog.dismiss();
+        }
         this.alertDialogOpen = false;
         super.onDestroy();
     }
@@ -84,11 +87,11 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
     }
 
     private boolean isBright(float value) {
-        return value != this.environmentalLight;
+        return value >= this.environmentalLight;
     }
 
     private boolean exceedMinimumZAxis(float value) {
-        return value <= this.accelerometerZAxisGravity;
+        return value >= this.accelerometerZAxisGravity;
     }
 
     private void initializeSensors() {
@@ -115,7 +118,7 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
         this.gestureInstruction = getString(R.string.gesture_instruction);
         this.zero = Integer.valueOf(getString(R.string.zero));
         this.accelerometerZAxisGravity = Float.valueOf(getString(R.string.accelerometer_z_axis_gravity));
-        this.environmentalLight = Float.valueOf(R.string.environment_light);
+        this.environmentalLight = Float.valueOf(getString(R.string.environment_light));
     }
 
     private String getURIVideo() {
@@ -125,7 +128,10 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
     private void openAlertDialog() {
         this.alertDialogOpen = true;
         this.videoView.pause();
-        this.alertDialog = this.createAlertDialog().show();
+        try {
+            this.alertDialog = this.createAlertDialog().show();
+        } catch (Exception ex) {
+        }
 
     }
 
