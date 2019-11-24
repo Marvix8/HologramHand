@@ -24,7 +24,7 @@ Y listo, ahora tendrás que comenzar a realizar gesto intuitivos con la mano par
 ## Descripción detallada del sistema y diseño incremental (Embebido)
 
 ### Arduino Uno
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/arduino_uno.png" alt="drawing" width="300"/>
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/arduino_uno.PNG" alt="drawing" width="300"/>
 
 El hardware de Arduino consiste en una placa con un microcontrolador generalmente Atmel con puertos de comunicación y puertos de entrada/salida.
 
