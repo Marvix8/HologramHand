@@ -14,8 +14,8 @@
 #define BLUETOOTH_RX        7
 #define BLUETOOTH_TX        8
 #define BLUE_LED            4
-#define RGB_LED_RED         3
-#define RGB_LED_BLUE        4
+#define RGB_LED_RED         9
+#define RGB_LED_BLUE        6
 #define RGB_LED_GREEN       5
 
 /*
@@ -196,39 +196,51 @@ void loop()
         
         switch(hand.getMovement()){
             case (int)SPZ:
+              rgbColor(255,0,0); // rojo
               Serial.println("Star +Z");
               break;
             case (int)SNZ:
+              rgbColor(0,255,0); // verde
               Serial.println("Star -Z");
               break;
             case (int)SPY:
+              rgbColor(0,0,255); // azul
               Serial.println("Star +Y");
               break;
             case (int)SPX:
+              rgbColor(255,255,255); // blanco
               Serial.println("Star +X");
               break;
             case (int)RPY:
+              rgbColor(255,255,0); // amarillo
               Serial.println("Rock +Y");
               break;
             case (int)RPZ:
+              rgbColor(255,0,255); // magenta
               Serial.println("Rock +Z");
               break;
             case (int)GNZ:
+              rgbColor(0,255,255); // cyan
               Serial.println("Good -Z");
               break;
             case (int)GPZ:
+              rgbColor(0,255,148); // violeta
               Serial.println("Good +Z");
               break;
             case (int)GPX:
+              rgbColor(60,40,0); // naranja
               Serial.println("Good +X");
               break;
             case (int)SCPY:
+              rgbColor(128,0,0); // marrón
               Serial.println("Scissors +Y");
               break;
             case (int)SCNZ:
+              rgbColor(0,0,128); // navy
               Serial.println("Scissors -Z");
               break;
             case (int)UNDEFINED:
+              rgbColor(LOW,LOW,LOW); // apagado
               Serial.println("Undefined");
               break;
           }
@@ -261,6 +273,11 @@ void loop()
         counterSamePosition = 0;
       }
     }
+    /*
+  else {
+    rgbColor(LOW, LOW, LOW);
+  }
+     */
 }
 
 
@@ -285,10 +302,10 @@ void sendInformationViaBluetooth (const int movement)
  * @blueLightValue: cantidad de color azul.
  * @greenLightValue: cantidad de color verde.
  */
- /*
+ 
 void rgbColor (int redLightValue, int greenLightValue, int blueLightValue)
 {
   analogWrite(RGB_LED_RED, redLightValue);
   analogWrite(RGB_LED_BLUE, blueLightValue);
   analogWrite(RGB_LED_GREEN, greenLightValue);
-}*/
+}
