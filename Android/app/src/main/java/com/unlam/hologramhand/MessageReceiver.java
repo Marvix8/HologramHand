@@ -12,12 +12,12 @@ public class MessageReceiver extends BroadcastReceiver {
     private final int start;
     private final int defaultSkipTime;
     private final int zero;
-    private final int play;
-    private final int pause;
-    private final int stop;
-    private final int skipF;
-    private final int skipB;
-    private final int skipSF;
+    private final String play;
+    private final String pause;
+    private final String stop;
+    private final String skipF;
+    private final String skipB;
+    private final String skipSF;
     private final String instruction;
 
     public MessageReceiver(Context context) {
@@ -26,12 +26,12 @@ public class MessageReceiver extends BroadcastReceiver {
         this.start = Integer.valueOf(this.context.getString(R.string.start));
         this.defaultSkipTime = Integer.valueOf(this.context.getString(R.string.default_skip_time));
         this.zero = Integer.valueOf(this.context.getString(R.string.zero));
-        this.play = Integer.valueOf(this.context.getString(R.string.play));
-        this.pause = Integer.valueOf(this.context.getString(R.string.pause));
-        this.stop = Integer.valueOf(this.context.getString(R.string.stop));
-        this.skipF = Integer.valueOf(this.context.getString(R.string.skip_forward));
-        this.skipB = Integer.valueOf(this.context.getString(R.string.skip_backward));
-        this.skipSF = Integer.valueOf(this.context.getString(R.string.skip_super_forward));
+        this.play = this.context.getString(R.string.play);
+        this.pause = this.context.getString(R.string.pause);
+        this.stop = this.context.getString(R.string.stop);
+        this.skipF = this.context.getString(R.string.skip_forward);
+        this.skipB = this.context.getString(R.string.skip_backward);
+        this.skipSF = this.context.getString(R.string.skip_super_forward);
         this.instruction = this.context.getString(R.string.instruction);
     }
 

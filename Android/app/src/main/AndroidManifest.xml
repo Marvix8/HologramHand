@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CalibrationHandActivity"></activity>
         <activity android:name=".VideoPlayer" />
-        <activity android:name=".ImageSlideshow" />
         <activity
             android:name=".AboutUs"
             android:parentActivityName=".MainActivity" />

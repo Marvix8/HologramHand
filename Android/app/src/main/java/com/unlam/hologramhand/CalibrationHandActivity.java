@@ -31,9 +31,6 @@ public class CalibrationHandActivity extends AppCompatActivity {
         this.interval = Long.valueOf(getString(R.string.one_second));
         this.startTime = Long.valueOf(getString(R.string.ten_seconds));
         this.bluetoothService = BluetoothService.create();
-//        this.interval = 1000;
-//        this.startTime = 10000;
-//        this.sendInstructionTime = 2;
         this.bluetoothService = BluetoothService.create();
     }
 

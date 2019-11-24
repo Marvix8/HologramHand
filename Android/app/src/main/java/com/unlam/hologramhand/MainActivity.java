@@ -23,13 +23,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
-import android.widget.Toast;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceFragmentCompat;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 

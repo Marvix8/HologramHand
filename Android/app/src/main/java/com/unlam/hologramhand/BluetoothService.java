@@ -143,8 +143,6 @@ public class BluetoothService extends Thread {
                     //voy concatenando el msj
                     String readMessage = (String) msg.obj;
                     recDataString = new StringBuilder(); //TODO: eliminar
-                    //recDataString.append(readMessage);
-                    //int endOfLineIndex = recDataString.indexOf("\r\n");
 
                     //cuando recibo toda una linea la muestro en el layout
                     if (readMessage.length() > Integer.valueOf(mainContext.getString(R.string.zero))) {

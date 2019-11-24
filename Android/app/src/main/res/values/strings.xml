@@ -46,13 +46,16 @@
     <string name="conected">conectado </string>
     <string name="fail_device">fallo dispositivo </string>
 
-    <string name="alert_dialog_message">Ubique el celuar con la pantalla hacia arriba sobre una mesa y apague las luces</string>
+    <string name="alert_dialog_message_high_bright">Luz ambiente muy alta, empeorará la visualización del holograma</string>
+    <string name="alert_dialog_message_accelerometer">Ubique el celular con la pantalla hacia arriba sobre una mesa</string>
     <string name="alert_dialog_title">ALERTA</string>
     <string name="accept_alert_dialog">Aceptar</string>
 
     <!-- Message Receiver-->
-    <string name="environment_light">500.0</string>
-    <string name="accelerometer_z_axis_gravity">10.3</string>
+    <string name="environment_light">500</string>
+    <string name="minimum_z_axis_accelerometer">8.3</string>
+    <string name="x_axis_accelerometer_range_positive">3.5</string>
+    <string name="x_axis_accelerometer_range_negative">-3.5</string>
 
     <!-- MainActivity -->
     <string name="shake_update_time">100</string>;
@@ -74,4 +77,11 @@
     <string name="second_configuration_message">Mantenga la mano bien estirada y presione INICIAR</string>
     <string name="configuration_done_message">Calibración completada correctamente. Presione FINALIZAR</string>
     <string name="finish_configuration">FINALIZAR</string>
+    <string name="current_value">Valor Indicador:</string>
+    <string name="environmental_value_text_label">Valor Ambiente:</string>
+    <string name="reference_value_label">Valor Recomendado:</string>
+    <string name="recommended_value">0 o 1</string>
+    <string name="save_preferences">Guardar</string>
+    <string name="settings_shared_preferences">Shared Preferences</string>
+    <string name="shared_preferences_bright">setting_bright</string>
 </resources>
