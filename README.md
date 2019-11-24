@@ -23,12 +23,12 @@ Y listo, ahora tendrás que comenzar a realizar gesto intuitivos con la mano par
 
 ## Descripción detallada del sistema y diseño incremental (Embebido)
 
-### Arduino Mega2560
-<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Arduino%20Mega2560.jpeg" alt="drawing" width="300"/>
+### Arduino Uno
+<img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/arduino_uno.png" alt="drawing" width="300"/>
 
 El hardware de Arduino consiste en una placa con un microcontrolador generalmente Atmel con puertos de comunicación y puertos de entrada/salida.
 
-Arduino Mega2560 es una placa electrónica basada en ATmega2560. Tiene 54 pines de entrada / salida digital (de los cuales 15 se pueden usar como salidas PWM), 16 entradas analógicas, 4 UART (puertos serie de hardware), oscilador de cristal de 16 MHz, una conexión USB, un conector de alimentación, un encabezado ICSP y un botón de reinicio.
+Arduino Uno es una placa electrónica basada en el microcontrolador ATMega 328. Cuenta con 14 entradas/salidas digitales, de las cuales 6 se pueden utilizar como salidas PWM(modulación por ancho de pulsos) y otras 6 son entradas analógicas.
 
 ### Bluetooth HC-06
 <img src="https://github.com/Marvix8/X1/blob/master/Sistema-Embebido/images/Bluetooth%20HC-06.jpeg" alt="drawing" width="300"/>

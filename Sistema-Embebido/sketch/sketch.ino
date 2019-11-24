@@ -75,6 +75,7 @@ Kalman acelerometerZK(0.8, 8, 1023, 0);
 // Prototipos de funciones
 void sendInformationViaBluetooth (const int);
 void rgbColor (int, int, int);
+void ledRGB();
 
 /*
    Configuración inicial de pines y comunicación.
@@ -244,6 +245,7 @@ void loop()
               Serial.println("Undefined");
               break;
           }
+        ledRGB();
 
         if(gesture.getAction() != -1 && gesture.getHasChanged() == true) {
           //bluetooth.write(gesture.getAction());          
@@ -283,16 +285,25 @@ void loop()
 
 
 /*
- * Función utilizada para enviar información vía Bluetooth
- * 
- * Recibe:
- * @movement: movimiento a enviar a la aplicación Android.
+ * Función utilizada para seleccionar el color a encender
+ * del led RGB
  */
- /*
-void sendInformationViaBluetooth (const int movement)
-{
-  bluetooth.write(movement);
-}*/
+void ledRGB() {
+  switch(hand.getMovement()){
+    case (int)SPZ: rgbColor(255,0,0); break; // rojo
+    case (int)SNZ: rgbColor(0,255,0); break; // verde
+    case (int)SPY: rgbColor(0,0,255); break; // azul
+    case (int)SPX: rgbColor(255,255,255); break; // blanco
+    case (int)RPY: rgbColor(255,255,0); break; // amarillo
+    case (int)RPZ: rgbColor(255,0,255); break; // magenta
+    case (int)GNZ: rgbColor(0,255,255); break; // cyan
+    case (int)GPZ: rgbColor(0,255,148); break; // violeta
+    case (int)GPX: rgbColor(60,40,0); break; // naranja
+    case (int)SCPY: rgbColor(128,0,0); break; // marrón
+    case (int)SCNZ: rgbColor(0,0,128); break; // navy
+    case (int)UNDEFINED: rgbColor(LOW,LOW,LOW); break; // apagado
+    }
+}
 
 
 /*
@@ -302,7 +313,6 @@ void sendInformationViaBluetooth (const int movement)
  * @blueLightValue: cantidad de color azul.
  * @greenLightValue: cantidad de color verde.
  */
- 
 void rgbColor (int redLightValue, int greenLightValue, int blueLightValue)
 {
   analogWrite(RGB_LED_RED, redLightValue);
