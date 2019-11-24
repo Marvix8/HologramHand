@@ -187,8 +187,8 @@ class Hand {
 			return this->calibrated;
 		}
 		
-		void setCalibrated() {
-			this->calibrated = true;
+		void setCalibrated(bool flag) {
+			this->calibrated = flag;
 		}
 		
 		double getAux(){

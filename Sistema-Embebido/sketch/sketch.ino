@@ -66,6 +66,7 @@ double filteredMeasurementZ;
 
 // lectura de bluetooth
 int bluetoothReader;
+char bluetoothSender;
 
 // Kalman para acelerometro
 Kalman acelerometerXK(0.7, 15, 1023, 0);
@@ -90,10 +91,10 @@ void setup()
   pinMode(RGB_LED_BLUE, OUTPUT);
   pinMode(RGB_LED_GREEN, OUTPUT);*/
 
-  //bluetooth.begin(9600); // Inicializa comunicación bluetooth.
+  
   Serial.begin(9600); // Inicializa comunicación en serie.
-
-  Wire.write("begin");
+  bluetooth.begin(9600); // Inicializa comunicación bluetooth.
+  
   IMU.begin();
   IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
 
@@ -107,13 +108,11 @@ void loop()
 {
   
   //Serial.println(Serial.read());
-  //if(bluetooth.available()){
-    bluetoothReader = Serial.read();
-    //bluetoothReader = bluetooth.read();
+  if(bluetooth.available()){
+    //bluetoothReader = Serial.read();
+    bluetoothReader = bluetooth.read();
 
-    //if(bluetooth.read() == CALIBRATE_BEND_HAND) {
     if(bluetoothReader == CALIBRATE_BEND_HAND) {
-      Serial.println("recibi B");
       hand.calibrateBendHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
       Serial.print("P: ");
       Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
@@ -123,14 +122,10 @@ void loop()
       Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
       Serial.println("BendCal");
     }
-
-    Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
-    delay(1500);
-    
+  
     if(bluetoothReader == CALIBRATE_STRAIGHT_HAND){
-      Serial.println("recibi A");
       hand.calibrateStraightHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
-      hand.setCalibrated();
+      hand.setCalibrated(true);
       Serial.print("P: ");
       Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
       Serial.print("I: ");
@@ -148,10 +143,9 @@ void loop()
         digitalWrite(BLUE_LED , LOW);
       }
     }
-    
-    if(hand.getCalibrated() == true) {
-      /*Serial.print("Counter: ");
-      Serial.println(counterSamePosition);*/
+  }
+
+  if(hand.getCalibrated() == true) {
       bigFingerFlex = (double)analogRead(FLEX_SENSOR_PULGAR);
       indexFingerFlex = (double)analogRead(FLEX_SENSOR_INDICE);
       middleFingerFlex = (double)analogRead(FLEX_SENSOR_MEDIO);
@@ -197,89 +191,77 @@ void loop()
         
         switch(hand.getMovement()){
             case (int)SPZ:
-              rgbColor(255,0,0); // rojo
               Serial.println("Star +Z");
               break;
             case (int)SNZ:
-              rgbColor(0,255,0); // verde
               Serial.println("Star -Z");
               break;
             case (int)SPY:
-              rgbColor(0,0,255); // azul
               Serial.println("Star +Y");
               break;
             case (int)SPX:
-              rgbColor(255,255,255); // blanco
               Serial.println("Star +X");
               break;
             case (int)RPY:
-              rgbColor(255,255,0); // amarillo
               Serial.println("Rock +Y");
               break;
             case (int)RPZ:
-              rgbColor(255,0,255); // magenta
               Serial.println("Rock +Z");
               break;
             case (int)GNZ:
-              rgbColor(0,255,255); // cyan
               Serial.println("Good -Z");
               break;
             case (int)GPZ:
-              rgbColor(0,255,148); // violeta
               Serial.println("Good +Z");
               break;
             case (int)GPX:
-              rgbColor(60,40,0); // naranja
               Serial.println("Good +X");
               break;
             case (int)SCPY:
-              rgbColor(128,0,0); // marrón
               Serial.println("Scissors +Y");
               break;
             case (int)SCNZ:
-              rgbColor(0,0,128); // navy
               Serial.println("Scissors -Z");
               break;
             case (int)UNDEFINED:
-              rgbColor(LOW,LOW,LOW); // apagado
               Serial.println("Undefined");
               break;
           }
-        ledRGB();
+        //ledRGB();
 
-        if(gesture.getAction() != -1 && gesture.getHasChanged() == true) {
-          //bluetooth.write(gesture.getAction());          
+        if(gesture.getAction() != '9' && gesture.getHasChanged() == true) {
+          bluetoothSender = gesture.getAction();
+          bluetooth.write(bluetoothSender);
           Serial.println("Acción a enviar: ");
-          switch (gesture.getAction()){
-            case (int)PLAY:
+          /*switch ((String)gesture.getAction()){
+            case (String)PLAY:
               Serial.println("PLAY");
               break;
-            case (int)PAUSE:
+            case (String)PAUSE:
               Serial.println("PAUSE");
               break;
-            case (int)STOP:
+            case (String)STOP:
               Serial.println("STOP");
               break;
-            case (int)PLUS_10S:
+            case (String)PLUS_10S:
               Serial.println("PLUS_10S");
               break;
-            case (int)LESS_10S:
+            case (String)LESS_10S:
               Serial.println("LESS_10S");
               break;
-            case (int)PLUS_20S:
+            case (String)PLUS_20S:
               Serial.println("PLUS_20S");
               break;
-            }
+            }*/
           }
         gesture.setHasChanged(false);
         counterSamePosition = 0;
       }
     }
-    /*
-  else {
-    rgbColor(LOW, LOW, LOW);
-  }
-     */
+    else {
+       //rgbColor(LOW, LOW, LOW);
+    }
+  
 }
 
 

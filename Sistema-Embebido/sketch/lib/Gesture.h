@@ -2,14 +2,15 @@
 #define _Gesture_h
 
 #include "Hand.h"
-
+	
 // Acciones a realizar en aplicación Android
-#define PLAY          0
-#define PAUSE         1
-#define STOP          2
-#define PLUS_10S      3
-#define LESS_10S      4
-#define PLUS_20S      5 
+#define PLAY          '0'
+#define PAUSE         '1'
+#define STOP          '2'
+#define PLUS_10S      '3'
+#define LESS_10S      '4'
+#define PLUS_20S      '5' 
+#define NO_ACTION     '9'
 
 enum State {
 	StarPZ,
@@ -48,12 +49,12 @@ class Gesture {
 	
 	public:
 		Hand *hand;
-		int action;
+		char action;
 		bool hasChanged;
 		
 		// Constructor de la clase Gesture
 		Gesture(Hand& hand): hand(&hand) {
-			this->action = -1;
+			this->action = NO_ACTION;
 			this->hasChanged = false;
 		}
 	
@@ -93,11 +94,11 @@ class Gesture {
 			}
 		}
 		
-		int getAction() {
+		char getAction() {
 			return this->action;
 		}
 		
-		int getGesture() {
+		char getGesture() {
 			return this->action;
 		}
 		
@@ -220,32 +221,32 @@ class Gesture {
 		*/
 		void outputRockPY() {
 			this->hasChanged = true;
-			this->action = (int)STOP;
+			this->action = STOP;
 		}
 
 		void outputGoodNZ() {
 			this->hasChanged = true;
-			this->action = (int)PLUS_10S;
+			this->action = PLUS_10S;
 		}
 		
 		void outputGoodPZ() {
 			this->hasChanged = true;
-			this->action = (int)LESS_10S;
+			this->action = LESS_10S;
 		}
 		
 		void outputGoodPX() {
 			this->hasChanged = true;
-			this->action = (int)PLAY;
+			this->action = PLAY;
 		}
 		
 		void outputScissorPY() {
 			this->hasChanged = true;
-			this->action = (int)PLUS_20S;
+			this->action = PLUS_20S;
 		}
 		
 		void outputScissorNZ() {
 			this->hasChanged = true;
-			this->action = (int)PAUSE;
+			this->action = PAUSE;
 		}
 
 };
