@@ -127,17 +127,6 @@ class Gesture {
 		/*
 		*	STATES
 		*/
-		void stateDefault() {
-			switch (currentInput) {
-				case Input::InStarPZ: changeState(State::StarPZ); break;
-				case Input::InStarNZ: changeState(State::StarNZ); break;
-				case Input::InStarPY: changeState(State::StarPY); break;
-				case Input::InStarPX: changeState(State::StarPX); break;
-				case Input::InRockPZ: changeState(State::RockPZ); break;
-				default: changeState(State::Default); break;
-			}
-		}
-
 		void stateStarPZ() {
 			switch(currentInput) {
 				case Input::InRockPY: changeState(State::RockPY); break;
@@ -172,7 +161,14 @@ class Gesture {
 		}
 		
 		void stateRockPY() {
-			changeState(State::Default);
+			switch(currentInput) {
+				case Input::InStarPZ: changeState(State::StarPZ); break;
+				case Input::InStarNZ: changeState(State::StarNZ); break;
+				case Input::InStarPY: changeState(State::StarPY); break;
+				case Input::InStarPX: changeState(State::StarPX); break;
+				case Input::InRockPZ: changeState(State::RockPZ); break;
+				default: changeState(State::Default); break;
+			}
 		}
 		
 		void stateRockPZ() {
@@ -184,23 +180,39 @@ class Gesture {
 		}
 		
 		void stateGoodNZ() {
-			changeState(State::Default);
+			initStates();
 		}
 		
 		void stateGoodPZ() {
-			changeState(State::Default);
+			initStates();
 		}
 		
 		void stateGoodPX() {
-			changeState(State::Default);
+			initStates();
 		}
 		
 		void stateScissorPY() {
-			changeState(State::Default);
+			initStates();
 		}
 		
 		void stateScissorNZ() {
-			changeState(State::Default);
+			initStates();
+		}
+		
+		void stateDefault() {
+			initStates();
+		}
+
+		
+		void initStates() {
+			switch(currentInput) {
+				case Input::InStarPZ: changeState(State::StarPZ); break;
+				case Input::InStarNZ: changeState(State::StarNZ); break;
+				case Input::InStarPY: changeState(State::StarPY); break;
+				case Input::InStarPX: changeState(State::StarPX); break;
+				case Input::InRockPZ: changeState(State::RockPZ); break;
+				default: changeState(State::Default); break;
+			}			
 		}
 
 		/*

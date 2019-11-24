@@ -13,7 +13,7 @@
 #define FLEX_SENSOR_MEDIO   A2
 #define BLUETOOTH_RX        7
 #define BLUETOOTH_TX        8
-#define BLUE_LED            2
+#define BLUE_LED            4
 #define RGB_LED_RED         3
 #define RGB_LED_BLUE        4
 #define RGB_LED_GREEN       5
@@ -39,7 +39,7 @@ int mensajeBluetooth;
 SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 
 // Declarar objetos de sensores
-Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX, 1.0);
+Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX, 0.5);
 Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX, 0.8);
 Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX, 0.5);
 // Objeto de acelerómetros
@@ -84,8 +84,8 @@ void setup()
   pinMode(FLEX_SENSOR_PULGAR, INPUT);
   pinMode(FLEX_SENSOR_INDICE, INPUT);
   pinMode(FLEX_SENSOR_MEDIO, INPUT);
-  /*pinMode(BLUE_LED, OUTPUT);
-  pinMode(RGB_LED_RED, OUTPUT);
+  pinMode(BLUE_LED, OUTPUT);
+  /*pinMode(RGB_LED_RED, OUTPUT);
   pinMode(RGB_LED_BLUE, OUTPUT);
   pinMode(RGB_LED_GREEN, OUTPUT);*/
 
@@ -122,6 +122,9 @@ void loop()
       Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
       Serial.println("BendCal");
     }
+
+    Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
+    delay(1500);
     
     if(bluetoothReader == CALIBRATE_STRAIGHT_HAND){
       Serial.println("recibi A");
@@ -135,6 +138,14 @@ void loop()
       Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
       Serial.println("StraightCal");
       Serial.println("Calibrated");
+    }
+    
+    if(bluetoothReader == TURN_LED) {
+      if(digitalRead(BLUE_LED) == LOW) {
+        digitalWrite(BLUE_LED , HIGH);  
+      } else {
+        digitalWrite(BLUE_LED , LOW);
+      }
     }
     
     if(hand.getCalibrated() == true) {
