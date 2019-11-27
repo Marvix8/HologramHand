@@ -161,23 +161,16 @@ class Gesture {
 			}
 		}
 		
-		void stateRockPY() {
-			switch(currentInput) {
-				case Input::InStarPZ: changeState(State::StarPZ); break;
-				case Input::InStarNZ: changeState(State::StarNZ); break;
-				case Input::InStarPY: changeState(State::StarPY); break;
-				case Input::InStarPX: changeState(State::StarPX); break;
-				case Input::InRockPZ: changeState(State::RockPZ); break;
-				default: changeState(State::Default); break;
-			}
-		}
-		
 		void stateRockPZ() {
 			switch(currentInput) {
 				case Input::InScissorNZ: changeState(State::ScissorNZ); break;
 				case Input::InRockPZ: break;
 				default: changeState(State::Default); break;
 			}
+		}
+		
+		void stateRockPY() {
+			initStates();
 		}
 		
 		void stateGoodNZ() {

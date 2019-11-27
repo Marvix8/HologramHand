@@ -15,8 +15,8 @@
 #define BLUETOOTH_TX        8
 #define BLUE_LED            4
 #define RGB_LED_RED         9
-#define RGB_LED_BLUE        6
-#define RGB_LED_GREEN       5
+#define RGB_LED_BLUE        5
+#define RGB_LED_GREEN       6
 
 /*
    Voltaje que reciven los sensores
@@ -87,9 +87,9 @@ void setup()
   pinMode(FLEX_SENSOR_INDICE, INPUT);
   pinMode(FLEX_SENSOR_MEDIO, INPUT);
   pinMode(BLUE_LED, OUTPUT);
-  /*pinMode(RGB_LED_RED, OUTPUT);
+  pinMode(RGB_LED_RED, OUTPUT);
   pinMode(RGB_LED_BLUE, OUTPUT);
-  pinMode(RGB_LED_GREEN, OUTPUT);*/
+  pinMode(RGB_LED_GREEN, OUTPUT);
 
   
   Serial.begin(9600); // Inicializa comunicación en serie.
@@ -106,10 +106,7 @@ void setup()
 */
 void loop()
 {
-  
-  //Serial.println(Serial.read());
   if(bluetooth.available()){
-    //bluetoothReader = Serial.read();
     bluetoothReader = bluetooth.read();
 
     if(bluetoothReader == CALIBRATE_BEND_HAND) {
@@ -227,7 +224,7 @@ void loop()
               Serial.println("Undefined");
               break;
           }
-        //ledRGB();
+        ledRGB();
 
         if(gesture.getAction() != '9' && gesture.getHasChanged() == true) {
           bluetoothSender = gesture.getAction();
@@ -259,7 +256,7 @@ void loop()
       }
     }
     else {
-       //rgbColor(LOW, LOW, LOW);
+       rgbColor(LOW, LOW, LOW);
     }
   
 }
