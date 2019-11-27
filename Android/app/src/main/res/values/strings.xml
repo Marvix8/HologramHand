@@ -16,4 +16,72 @@
     <string name="place_third_name">Krause, Ezequiel</string>
     <string name="place_fourth_name">Scarpello, Franco</string>
 
+    <!-- VideoPlayer -->
+    <string name="resource_base_URI">android.resource://</string>
+    <string name="slash">/</string>
+    <string name="gesture_instruction">gesture-instruction</string>
+
+    <!-- MessageReceiver -->
+    <string name="one_second">1000</string>
+    <string name="two_seconds">2</string>
+    <string name="start">0</string>
+    <string name="default_skip_time">10</string>
+    <string name="zero">0</string>
+
+    <string name="play">0</string>
+    <string name="pause">1</string>
+    <string name="stop">2</string>
+    <string name="skip_forward">3</string>
+    <string name="skip_backward">4</string>
+    <string name="skip_super_forward">5</string>
+
+    <string name="instruction">instruction</string>
+
+    <!-- BluetoothService -->
+    <string name="conection_failure">La conexion falló</string>
+    <string name="buffer_size">256</string>
+    <string name="minus_one">-1</string>
+    <string name="failed">falló </string>
+    <string name="socket">SOCKET</string>
+    <string name="conected">conectado </string>
+    <string name="fail_device">fallo dispositivo </string>
+
+    <string name="alert_dialog_message_high_bright">Luz ambiente muy alta, empeorará la visualización del holograma</string>
+    <string name="alert_dialog_message_accelerometer">Ubique el celular con la pantalla hacia arriba sobre una mesa</string>
+    <string name="alert_dialog_title">ALERTA</string>
+    <string name="accept_alert_dialog">Aceptar</string>
+
+    <!-- Message Receiver-->
+    <string name="environment_light">500</string>
+    <string name="minimum_z_axis_accelerometer">8.3</string>
+    <string name="x_axis_accelerometer_range_positive">3.5</string>
+    <string name="x_axis_accelerometer_range_negative">-3.5</string>
+
+    <!-- MainActivity -->
+    <string name="shake_update_time">100</string>;
+    <string name="ten_seconds">10000</string>;
+    <string name="an_error_has_occurred">Ocurrió un error.</string>;
+    <string name="permission_granted">Permission granted.</string>;
+    <string name="turn_on_bluetooth_message">Encienda el bluetooth.</string>;
+    <string name="error_finding_devices">Error al buscar dispositivos.</string>;
+    <string name="turning_off_bluetooth">Apagando Bluetooth.</string>;
+    <string name="turning_on_bluetooth">Activando Bluetooth.</string>;
+    <string name="axis_x">0</string>;
+    <string name="axis_y">1</string>;
+    <string name="axis_z">2</string>;
+
+    <string name="configuration">Configuración</string>
+    <string name="calibrar_guante">Calibrar Guante</string>
+    <string name="start_configuration">INICIAR</string>
+    <string name="first_configuration_message">Mantenga la mano bien cerrada y presione INICIAR</string>
+    <string name="second_configuration_message">Mantenga la mano bien estirada y presione INICIAR</string>
+    <string name="configuration_done_message">Calibración completada correctamente. Presione FINALIZAR</string>
+    <string name="finish_configuration">FINALIZAR</string>
+    <string name="current_value">Valor Indicador:</string>
+    <string name="environmental_value_text_label">Valor Ambiente:</string>
+    <string name="reference_value_label">Valor Recomendado:</string>
+    <string name="recommended_value">0 o 1</string>
+    <string name="save_preferences">Guardar</string>
+    <string name="settings_shared_preferences">Shared Preferences</string>
+    <string name="shared_preferences_bright">setting_bright</string>
 </resources>
