@@ -16,7 +16,7 @@
 #define Z_PLUS	2
 #define Z_LESS	3
 
-// Posición final
+// Gestos
 #define	SPZ	 	 0
 #define	SNZ	 	 1
 #define	SPY	 	 2
@@ -42,10 +42,6 @@ class Hand {
 		int handPosition;
 		int spacePosition;
 		int movement;
-		
-		
-		int aux;
-		
 
 	public:
 		// Constructor genérico Hand.
@@ -62,7 +58,6 @@ class Hand {
 		bigFinger(&bigFinger), indexFinger(&indexFinger), middleFinger(&middleFinger), acelerometer(&acelerometer) {
 			this->calibrated = false;
 			this->movement = -1;
-			this->aux = -1;
 		}
 
 		void processPosition(double bigFingerSensor, double indexFingerSensor, double middleFingerSensor) {
@@ -189,10 +184,6 @@ class Hand {
 		
 		void setCalibrated(bool flag) {
 			this->calibrated = flag;
-		}
-		
-		double getAux(){
-			return this->aux;
 		}
 		
 		void calibrateStraightHand(double bigFingerSensorValue, double indexFingerSensorValue, double middleFingerSensorValue) {

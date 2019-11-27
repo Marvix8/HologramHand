@@ -50,12 +50,10 @@ class Gesture {
 	public:
 		Hand *hand;
 		char action;
-		bool hasChanged;
 		
 		// Constructor de la clase Gesture
 		Gesture(Hand& hand): hand(&hand) {
 			this->action = NO_ACTION;
-			this->hasChanged = false;
 		}
 	
 		void updateStateMachine() {
@@ -100,14 +98,6 @@ class Gesture {
 		
 		char getGesture() {
 			return this->action;
-		}
-		
-		bool getHasChanged() {
-			return this->hasChanged;
-		}
-	
-		void setHasChanged(bool hasChanged) {
-			this->hasChanged = hasChanged;
 		}
 		
 	private:
@@ -213,32 +203,26 @@ class Gesture {
 		*	OUTPUTS
 		*/
 		void outputRockPY() {
-			this->hasChanged = true;
 			this->action = STOP;
 		}
 
 		void outputGoodNZ() {
-			this->hasChanged = true;
 			this->action = PLUS_10S;
 		}
 		
 		void outputGoodPZ() {
-			this->hasChanged = true;
 			this->action = LESS_10S;
 		}
 		
 		void outputGoodPX() {
-			this->hasChanged = true;
 			this->action = PLAY;
 		}
 		
 		void outputScissorPY() {
-			this->hasChanged = true;
 			this->action = PLUS_20S;
 		}
 		
 		void outputScissorNZ() {
-			this->hasChanged = true;
 			this->action = PAUSE;
 		}
 

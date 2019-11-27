@@ -1,8 +1,8 @@
 #ifndef _Flex_h
 #define _Flex_h
 
-#define BEND_FLEX         0
-#define STRAIGHT_FLEX     1
+#define BEND_FLEX         	0
+#define STRAIGHT_FLEX     	1
 #define VOLTAJE_RECEIVED	4.98
 
 class Flex {

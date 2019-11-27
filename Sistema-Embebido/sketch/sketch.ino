@@ -26,14 +26,12 @@
 /*
  * Inputs recibidos desde bluetooth
  */
-#define CALIBRATE_STRAIGHT_HAND 83
-#define CALIBRATE_BEND_HAND 66
-#define TURN_LED 76
+#define CALIBRATE_STRAIGHT_HAND 83  // S
+#define CALIBRATE_BEND_HAND 66      // B
+#define TURN_LED 76                 // L
 
+// Valor de la resistencia del divisor de tensión de cada flex.
 #define DIVISOR_RESISTANCE_FLEX 100
-
-// Valor a enviar vía bluetooth.
-int mensajeBluetooth;
 
 // Declarar objeto de comunicación bluetooth.
 SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
@@ -42,6 +40,7 @@ SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 Flex bigFinger((double)DIVISOR_RESISTANCE_FLEX, 0.5);
 Flex indexFinger((double)DIVISOR_RESISTANCE_FLEX, 0.8);
 Flex middleFinger((double)DIVISOR_RESISTANCE_FLEX, 0.5);
+
 // Objeto de acelerómetros
 MPU9250 IMU(Wire,0x68);
 Acelerometer acelerometer;
@@ -81,7 +80,7 @@ void ledRGB();
 /*
    Configuración inicial de pines y comunicación.
 */
-void setup()
+void setup() 
 {
   pinMode(FLEX_SENSOR_PULGAR, INPUT);
   pinMode(FLEX_SENSOR_INDICE, INPUT);
@@ -97,8 +96,6 @@ void setup()
   
   IMU.begin();
   IMU.setAccelRange(MPU9250::ACCEL_RANGE_8G);
-
-  Serial.println("Setup OK");
 }
 
 /*
@@ -160,11 +157,10 @@ void loop()
 
         ledRGB();
 
-        if(gesture.getAction() != '9' && gesture.getHasChanged() == true) {
+        if(gesture.getAction() != '9') {
           bluetoothSender = gesture.getAction();
           bluetooth.write(bluetoothSender);
-          }
-        gesture.setHasChanged(false);
+        }
         counterSamePosition = 0;
       }
     }
