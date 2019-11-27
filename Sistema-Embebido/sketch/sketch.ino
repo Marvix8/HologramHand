@@ -111,26 +111,11 @@ void loop()
 
     if(bluetoothReader == CALIBRATE_BEND_HAND) {
       hand.calibrateBendHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.print("P: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
-      Serial.print("I: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
-      Serial.print("M: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.println("BendCal");
     }
   
     if(bluetoothReader == CALIBRATE_STRAIGHT_HAND){
       hand.calibrateStraightHand((double)analogRead(FLEX_SENSOR_PULGAR), (double)analogRead(FLEX_SENSOR_INDICE), (double)analogRead(FLEX_SENSOR_MEDIO));
       hand.setCalibrated(true);
-      Serial.print("P: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_PULGAR));
-      Serial.print("I: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_INDICE));
-      Serial.print("M: ");
-      Serial.println((double)analogRead(FLEX_SENSOR_MEDIO));
-      Serial.println("StraightCal");
-      Serial.println("Calibrated");
     }
     
     if(bluetoothReader == TURN_LED) {
@@ -173,83 +158,11 @@ void loop()
         gesture.readInput();
         gesture.updateStateMachine();
 
-        Serial.print("P: ");
-        Serial.print(bigFinger.getFlexPosition());
-        Serial.print("\t");
-        Serial.println(bigFingerFlex);
-        Serial.print("I: ");
-        Serial.print(indexFinger.getFlexPosition());
-        Serial.print("\t");
-        Serial.println(indexFingerFlex);
-        Serial.print("M: ");
-        Serial.print(middleFinger.getFlexPosition());
-        Serial.print("\t");
-        Serial.println(middleFingerFlex);
-        
-        switch(hand.getMovement()){
-            case (int)SPZ:
-              Serial.println("Star +Z");
-              break;
-            case (int)SNZ:
-              Serial.println("Star -Z");
-              break;
-            case (int)SPY:
-              Serial.println("Star +Y");
-              break;
-            case (int)SPX:
-              Serial.println("Star +X");
-              break;
-            case (int)RPY:
-              Serial.println("Rock +Y");
-              break;
-            case (int)RPZ:
-              Serial.println("Rock +Z");
-              break;
-            case (int)GNZ:
-              Serial.println("Good -Z");
-              break;
-            case (int)GPZ:
-              Serial.println("Good +Z");
-              break;
-            case (int)GPX:
-              Serial.println("Good +X");
-              break;
-            case (int)SCPY:
-              Serial.println("Scissors +Y");
-              break;
-            case (int)SCNZ:
-              Serial.println("Scissors -Z");
-              break;
-            case (int)UNDEFINED:
-              Serial.println("Undefined");
-              break;
-          }
         ledRGB();
 
         if(gesture.getAction() != '9' && gesture.getHasChanged() == true) {
           bluetoothSender = gesture.getAction();
           bluetooth.write(bluetoothSender);
-          Serial.println("Acción a enviar: ");
-          /*switch ((String)gesture.getAction()){
-            case (String)PLAY:
-              Serial.println("PLAY");
-              break;
-            case (String)PAUSE:
-              Serial.println("PAUSE");
-              break;
-            case (String)STOP:
-              Serial.println("STOP");
-              break;
-            case (String)PLUS_10S:
-              Serial.println("PLUS_10S");
-              break;
-            case (String)LESS_10S:
-              Serial.println("LESS_10S");
-              break;
-            case (String)PLUS_20S:
-              Serial.println("PLUS_20S");
-              break;
-            }*/
           }
         gesture.setHasChanged(false);
         counterSamePosition = 0;
@@ -257,11 +170,8 @@ void loop()
     }
     else {
        rgbColor(LOW, LOW, LOW);
-    }
-  
+    } 
 }
-
-
 
 /*
  * Función utilizada para seleccionar el color a encender
