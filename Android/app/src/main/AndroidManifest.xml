@@ -13,21 +13,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CalibrationHandActivity"></activity>
-        <activity android:name=".VideoPlayer" />
+
         <activity
-            android:name=".AboutUs"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".CalibrationHandActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".SettingsActivity"/>
+
+        <activity
+            android:name=".VideoPlayer"
+            android:screenOrientation="landscape"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".AboutUs"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

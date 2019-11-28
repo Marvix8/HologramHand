@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -35,7 +35,6 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.initializeVariables();
         this.mMessageReceiver = new MessageReceiver(this);
         this.mMessageReceiver.setActivityContext(this);
@@ -58,6 +57,7 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        this.sensorManager.unregisterListener(this);
         if (this.alertDialog != null) {
             this.alertDialog.dismiss();
         }
@@ -126,7 +126,7 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
 
         if (SharedPreferencesStatic.existPreference(this, getString(R.string.settings_shared_preferences), getString(R.string.shared_preferences_bright))) {
             this.environmentalLight = SharedPreferencesStatic.getIntPreference(this, getString(R.string.settings_shared_preferences), getString(R.string.shared_preferences_bright));
-        }else{
+        } else {
             this.environmentalLight = Integer.valueOf(getString(R.string.environment_light));
         }
     }
@@ -167,7 +167,6 @@ public class VideoPlayer extends AppCompatActivity implements SensorEventListene
                     }
                 });
     }
-
 
 
 }
