@@ -13,6 +13,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,8 @@ import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import static android.app.Service.START_STICKY;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -230,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return R.drawable.ic_cancel_black_24dp;
     }
 
+
     private BroadcastReceiver createBroadcastReceiver() {
         return new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
@@ -242,6 +246,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         deviceList = (ListView) findViewById(R.id.listView);
                     }
                     deviceList.setAdapter(adapter);
+                }else if (intent.getAction().equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)) {
+                    System.out.println("--------------------------------------------------------------->");
+                }
+
+                if(TextUtils.equals(action,BluetoothDevice.ACTION_ACL_DISCONNECTED)) {
+                    BluetoothDevice device = intent.getExtras().getParcelable(BluetoothDevice.EXTRA_DEVICE);
+
+                    System.out.println(device.getAddress());
+                    System.out.println(device.getName());
+                    ToasterPrinter.printToasterShort("ERROR",MainActivity.this);
                 }
             }
         };

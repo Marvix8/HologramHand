@@ -106,13 +106,17 @@ public class BluetoothService extends Thread {
         //el hilo secundario se queda esperando mensajes del HC05
         while (true) {
             try {
+
                 //se leen los datos del Bluethoot
                 bytes = this.mmInStream.read(buffer);
                 String readMessage = new String(buffer, zero, bytes);
                 System.out.println(readMessage);
                 //se muestran en el layout de la activity, utilizando el handler del hilo
                 // principal antes mencionado
+                if(this.conected.equals("conectado")){
+                    System.out.println("EQUALAS");
 
+                }
                 this.handlerBluetoothIn.obtainMessage(this.handlerState, bytes, this.minusOne, readMessage).sendToTarget();
             } catch (IOException e) {
                 break;
